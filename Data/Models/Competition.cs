@@ -14,9 +14,6 @@ namespace Data.Models
         public string Name { get; set; }
         public ICollection<ContestandCompetition> ContestandCompetition { get; set; }
         public ICollection<Attempt> Attempt { get; set; }
-        [ForeignKey("ContestantCompetition")]
-        public Guid CostestandCompetitionId { get; set; }
-        [ForeignKey("Attempt")]
-        public Guid AttemptId { get; set; }
+
     }
 }

@@ -8,6 +8,9 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
+using Data.DataAccessLayer;
+using Microsoft.EntityFrameworkCore;
+using Services.Provider;
 
 namespace WeightLifting
 {
@@ -23,11 +26,12 @@ namespace WeightLifting
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
+            services.AddDbContext<ApplicationDbContext>(options => options.UseSqlServer(Configuration.GetConnectionString("DefaultConnection")));
             services.AddMvc();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
-        public void Configure(IApplicationBuilder app, IHostingEnvironment env)
+        public void Configure(IApplicationBuilder app, IHostingEnvironment env, ApplicationDbContext dbContext)
         {
             if (env.IsDevelopment())
             {
@@ -35,6 +39,8 @@ namespace WeightLifting
             }
 
             app.UseMvc();
+
+            //DBInitializeProvider.Init(dbContext);
         }
     }
 }

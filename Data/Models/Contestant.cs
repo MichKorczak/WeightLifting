@@ -16,8 +16,5 @@ namespace Data.Models
         public DateTime DateOfBirthday { get; set; }
         public Sex Sex { get; set; }
         public ICollection<ContestandCompetition> ContestandCompetition { get; set; }
-        [ForeignKey("ContestantCompetition")]
-        public Guid ContestantCompetitionId { get; set; }
-
     }
 }
