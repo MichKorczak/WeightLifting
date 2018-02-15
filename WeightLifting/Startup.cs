@@ -11,6 +11,9 @@ using Microsoft.Extensions.Options;
 using Data.DataAccessLayer;
 using Microsoft.EntityFrameworkCore;
 using Services.Provider;
+using AutoMapper;
+using Services.Services.Interfaces;
+using Services.Services.Implementations;
 
 namespace WeightLifting
 {
@@ -26,7 +29,10 @@ namespace WeightLifting
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
+            
             services.AddDbContext<ApplicationDbContext>(options => options.UseSqlServer(Configuration.GetConnectionString("DefaultConnection")));
+            services.AddAutoMapper();
+            services.AddTransient<IContestantServis, ContestantServis>();
             services.AddMvc();
         }
 

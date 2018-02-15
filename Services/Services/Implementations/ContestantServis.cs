@@ -1,0 +1,29 @@
+﻿using Data.DataAccessLayer;
+using Data.DataTransferObject;
+using Microsoft.EntityFrameworkCore;
+using Services.Services.Interfaces;
+using System;
+using System.Collections.Generic;
+using System.Text;
+using System.Threading.Tasks;
+using Data.Models;
+
+namespace Services.Services.Implementations
+{
+    public class ContestantServis : IContestantServis
+    {
+        private readonly ApplicationDbContext dbContext;
+
+        public ContestantServis(ApplicationDbContext dbContext)
+        {
+            this.dbContext = dbContext;
+        }
+
+
+        public async Task<List<Contestant>> GetContestans()
+        {
+            var contestants = await dbContext.Contestants.ToListAsync();
+            return contestants;
+        }
+    }
+}
