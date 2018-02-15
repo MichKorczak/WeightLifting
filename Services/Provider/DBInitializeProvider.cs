@@ -54,6 +54,8 @@ namespace Services.Provider
             dbContext.Contestants.Add(contestant);
             dbContext.Competitions.Add(competition);
             dbContext.ContestandCompetitions.Add(contestandCompetition);
+
+            dbContext.SaveChanges();
         }
     }
 }

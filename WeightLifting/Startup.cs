@@ -46,7 +46,7 @@ namespace WeightLifting
 
             app.UseMvc();
 
-            //DBInitializeProvider.Init(dbContext);
+            DBInitializeProvider.Init(dbContext);
         }
     }
 }

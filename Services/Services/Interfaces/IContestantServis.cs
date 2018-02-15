@@ -10,5 +10,7 @@ namespace Services.Services.Interfaces
     public interface IContestantServis
     {
         Task<List<Contestant>> GetContestans();
+
+        Task AddContestant(Contestant contestant);
     }
 }

@@ -19,6 +19,11 @@ namespace Services.Services.Implementations
             this.dbContext = dbContext;
         }
 
+        public async Task AddContestant(Contestant contestant)
+        {
+            await dbContext.Contestants.AddAsync(contestant);
+            await dbContext.SaveChangesAsync();
+        }
 
         public async Task<List<Contestant>> GetContestans()
         {
