@@ -1,8 +1,6 @@
 ﻿using Data.DataAccessLayer;
 using Data.Models;
 using System;
-using System.Collections.Generic;
-using System.Text;
 
 namespace Services.Provider
 {
@@ -17,15 +15,16 @@ namespace Services.Provider
             {
                 Id = Guid.NewGuid(),
                 Date = DateTime.Now,
-                Name = "Championship",
+                Name = "Polish Championship",
             };
 
             var attempt = new Attempt
             {
                 Id = Guid.NewGuid(),
                 Competition = competition,
-                Name = "Rwanie",
+                NameOfAttempt = Data.Enums.NameOfAttempt.Snach,
                 Weight = 150,
+                Correct = true,
                 CompetitionId = competition.Id
                 
             };

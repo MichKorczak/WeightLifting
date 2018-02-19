@@ -1,10 +1,7 @@
 ﻿using Data.DataAccessLayer;
-using Data.DataTransferObject;
 using Microsoft.EntityFrameworkCore;
 using Services.Services.Interfaces;
-using System;
 using System.Collections.Generic;
-using System.Text;
 using System.Threading.Tasks;
 using Data.Models;
 
