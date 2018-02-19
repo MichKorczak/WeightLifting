@@ -21,7 +21,7 @@ namespace WeightLifting.Controllers
         }
 
         [HttpGet]
-        public async Task<IActionResult> Get()
+        public async Task<IActionResult> GetContestant()
         {
             var contestants = await contestantServis.GetContestans();
             return Ok(contestants);
@@ -37,7 +37,8 @@ namespace WeightLifting.Controllers
             await contestantServis.AddContestant(contestandToAdd);
             var contestantForDisplay = mapper.Map<ContestantForDisplay>(contestandToAdd);
             return Ok(contestantForDisplay);
-
         }
+
+
     }
-}S
+}
