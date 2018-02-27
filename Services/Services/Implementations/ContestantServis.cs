@@ -15,7 +15,6 @@ namespace Services.Services.Implementations
         {
             this.dbContext = dbContext;
         }
-
         public async Task AddContestant(Contestant contestant)
         {
             await dbContext.Contestants.AddAsync(contestant);
@@ -27,5 +26,6 @@ namespace Services.Services.Implementations
             var contestants = await dbContext.Contestants.ToListAsync();
             return contestants;
         }
-    }
+    } 
 }
+

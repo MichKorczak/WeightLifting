@@ -27,6 +27,8 @@ namespace WeightLifting
             services.AddDbContext<ApplicationDbContext>(options => options.UseSqlServer(Configuration.GetConnectionString("DefaultConnection")));
             services.AddAutoMapper();
             services.AddTransient<IContestantServis, ContestantServis>();
+            services.AddTransient<IAttemptServis, AttemptServis>();
+            services.AddTransient<ICompetitionServis, CompetitionServis>();
             services.AddMvc();
         }
 
@@ -36,9 +38,21 @@ namespace WeightLifting
             if (env.IsDevelopment())
             {
                 app.UseDeveloperExceptionPage();
+                app.UseBrowserLink();
             }
+            
+            else
+            {
+                app.UseExceptionHandler("/Error");
+            }
+            app.UseStaticFiles();
 
-            app.UseMvc();
+            app.UseMvc(routes =>
+            {
+                routes.MapRoute(
+                    name: "default",
+                    template: "{conteroller}/{action=Index}/{id}");
+            });
 
             DBInitializeProvider.Init(dbContext);
         }

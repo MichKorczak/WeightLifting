@@ -43,6 +43,7 @@ namespace Services.Provider
                 Id = Guid.NewGuid(),
                 Club = "Lechia",
                 Weight = 90,
+                Sincler = 310,
                 Contestant = contestant,
                 ContestandId = contestant.Id,
                 Competition = competition,

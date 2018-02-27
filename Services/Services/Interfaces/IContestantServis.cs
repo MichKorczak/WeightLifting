@@ -1,8 +1,5 @@
-﻿using Data.DataTransferObject;
-using Data.Models;
-using System;
+﻿using Data.Models;
 using System.Collections.Generic;
-using System.Text;
 using System.Threading.Tasks;
 
 namespace Services.Services.Interfaces

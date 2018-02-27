@@ -3,11 +3,11 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 15
 VisualStudioVersion = 15.0.27004.2009
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WeightLifting", "WeightLifting\WeightLifting.csproj", "{03EFF03A-A4F0-43AB-A7A0-639BA76ABAE5}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "WeightLifting", "WeightLifting\WeightLifting.csproj", "{03EFF03A-A4F0-43AB-A7A0-639BA76ABAE5}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Data", "Data\Data.csproj", "{B7EC8C50-1902-4282-8F0B-6A4C323DA62C}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Data", "Data\Data.csproj", "{B7EC8C50-1902-4282-8F0B-6A4C323DA62C}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Services", "Services\Services.csproj", "{DFAE5B44-9095-45DA-8516-CFE8F28B8E10}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Services", "Services\Services.csproj", "{DFAE5B44-9095-45DA-8516-CFE8F28B8E10}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
