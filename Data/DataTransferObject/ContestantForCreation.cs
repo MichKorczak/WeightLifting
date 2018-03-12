@@ -3,7 +3,7 @@ using System.ComponentModel.DataAnnotations;
 
 namespace Data.DataTransferObject
 {
-    public class ContestandForCreation
+    public class ContestantForCreation
     {
         [Required]
         [MinLength(3)]

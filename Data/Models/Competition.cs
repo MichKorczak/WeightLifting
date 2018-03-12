@@ -1,8 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
-using System.ComponentModel.DataAnnotations.Schema;
-using System.Text;
 
 namespace Data.Models
 {
@@ -12,7 +10,7 @@ namespace Data.Models
         public Guid Id { get; set; }
         public DateTime Date { get; set; }
         public string Name { get; set; }
-        public ICollection<ContestandCompetition> ContestandCompetition { get; set; }
+        public ICollection<ContestantCompetition> ContestantCompetition { get; set; }
         public ICollection<Attempt> Attempt { get; set; }
 
     }

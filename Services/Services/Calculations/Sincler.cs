@@ -11,6 +11,7 @@ namespace Services.Services.Calculations
         {
             var weight = contestandCompetition.Weight;
 
+
             return 1;
         }
     }

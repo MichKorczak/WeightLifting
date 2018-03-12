@@ -1,10 +1,11 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Text;
 
 namespace Data.DataTransferObject
 {
-    class CompetitionForDisplay
+    public class CompetitionForDisplay
     {
+        public Guid Id { get; set; }
+        public DateTime Date { get; set; }
+        public string Name { get; set; }
     }
 }

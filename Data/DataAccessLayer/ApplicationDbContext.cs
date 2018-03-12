@@ -13,7 +13,7 @@ namespace Data.DataAccessLayer
 
         public DbSet<Attempt> Attempts { get; set; }
         public DbSet<Competition> Competitions { get; set; }
-        public DbSet<ContestandCompetition> ContestandCompetitions { get; set; }
+        public DbSet<ContestantCompetition> ContestantCompetitions { get; set; }
         public DbSet<Contestant> Contestants { get; set; }
 
     }

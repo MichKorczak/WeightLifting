@@ -28,7 +28,7 @@ namespace WeightLifting.Controllers
         }
 
         [HttpPost]
-        public async Task<IActionResult> Post([FromBody] ContestandForCreation contestand)
+        public async Task<IActionResult> Post([FromBody] ContestantForCreation contestand)
         {
             if (!ModelState.IsValid || contestand == null)
                 return BadRequest();

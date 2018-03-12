@@ -38,7 +38,7 @@ namespace Services.Provider
                 Sex = Data.Enums.Sex.Male
             };
 
-            var contestandCompetition = new ContestandCompetition
+            var contestantCompetition = new ContestantCompetition
             {
                 Id = Guid.NewGuid(),
                 Club = "Lechia",
@@ -53,7 +53,7 @@ namespace Services.Provider
             dbContext.Attempts.Add(attempt);
             dbContext.Contestants.Add(contestant);
             dbContext.Competitions.Add(competition);
-            dbContext.ContestandCompetitions.Add(contestandCompetition);
+            dbContext.ContestantCompetitions.Add(contestantCompetition);
 
             dbContext.SaveChanges();
         }

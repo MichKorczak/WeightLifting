@@ -1,11 +1,7 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
+﻿using System.Threading.Tasks;
 using AutoMapper;
 using Data.DataTransferObject;
 using Data.Models;
-using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Services.Services.Interfaces;
 
@@ -16,9 +12,9 @@ namespace WeightLifting.Controllers
     public class ContestandCompetitionController : Controller
     {
         private readonly IMapper mapper;
-        private readonly IContestandCompetition contestandCompetitionServis;
+        private readonly IContestantCompetitionServis contestandCompetitionServis;
 
-        public ContestandCompetitionController(IMapper mapper, IContestandCompetition contestandCompetition)
+        public ContestandCompetitionController(IMapper mapper, IContestantCompetitionServis contestandCompetition)
         {
             this.mapper = mapper;
             this.contestandCompetitionServis = contestandCompetition; 
@@ -27,12 +23,12 @@ namespace WeightLifting.Controllers
         [HttpGet]
         public async Task<IActionResult> GetContestandCompetition()
         {
-            var contestandCompetition = await contestandCompetitionServis.GetContestandCompetition();
+            var contestandCompetition = await contestandCompetitionServis.GetContestantCompetition();
             return Ok(contestandCompetition);
         }
 
         [HttpPost]
-        public async Task<IActionResult> Post([FromBody] ContestandCompetitionForCreation contestandCompetition)
+        public async Task<IActionResult> Post([FromBody] ContestantCompetitionForCreation contestandCompetition)
         {
             if (!ModelState.IsValid || contestandCompetition == null)
                 return BadRequest();

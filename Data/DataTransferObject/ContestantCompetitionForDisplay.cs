@@ -3,7 +3,7 @@ using System;
 
 namespace Data.DataTransferObject
 {
-    public class ContestandCompetitionForDisplay
+    public class ContestantCompetitionForDisplay
     {
         public Guid Id { get; set; }
         public decimal Weight { get; set; }

@@ -2,7 +2,7 @@
 
 namespace Data.DataTransferObject
 {
-    public class ContestandCompetitionForCreation
+    public class ContestantCompetitionForCreation
     {
         public decimal Weight { get; set; }
         public string Club { get; set; }

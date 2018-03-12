@@ -3,7 +3,7 @@ using System;
 
 namespace Data.DataTransferObject
 {
-    class AttemptForDisplay
+    public class AttemptForDisplay
     {
         public Guid Id { get; set; }
         public NameOfAttempt NameOfAttempt { get; set; }

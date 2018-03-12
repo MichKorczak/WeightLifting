@@ -13,6 +13,6 @@ namespace Data.Models
         public string LastName { get; set; }
         public DateTime DateOfBirthday { get; set; }
         public Sex Sex { get; set; }
-        public ICollection<ContestandCompetition> ContestandCompetition { get; set; }
+        public ICollection<ContestantCompetition> ContestantCompetition { get; set; }
     }
 }
