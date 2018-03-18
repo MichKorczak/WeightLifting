@@ -10,6 +10,5 @@ namespace Data.DataTransferObject
         public NameOfAttempt NameOfAttempt { get; set; }
         public int Weight { get; set; }
         public bool Correct { get; set; }
-
     }
 }

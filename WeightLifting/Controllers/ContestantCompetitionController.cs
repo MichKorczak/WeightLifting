@@ -33,9 +33,9 @@ namespace WeightLifting.Controllers
             if (!ModelState.IsValid || contestandCompetition == null)
                 return BadRequest();
 
-            var contestandCompetitionToAdd = mapper.Map<ContestandCompetition>(contestandCompetition);
+            var contestandCompetitionToAdd = mapper.Map<ContestantCompetition>(contestandCompetition);
             await contestandCompetitionServis.AddConstestandCompetition(contestandCompetitionToAdd);
-            var contestandCompetitionForDisplay = mapper.Map<ContestandCompetitionForDisplay>(contestandCompetitionToAdd);
+            var contestandCompetitionForDisplay = mapper.Map<ContestantCompetitionForDisplay>(contestandCompetitionToAdd);
             return Ok(contestandCompetitionForDisplay);
         }
     }

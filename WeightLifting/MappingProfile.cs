@@ -19,11 +19,12 @@ namespace WeightLifting
             CreateMap<AttemptForCreation, Attempt>();
 
             CreateMap<Competition, CompetitionForDisplay>();
-            CreateMap<CompetitionForCreation, Competition>();
+            CreateMap<CompetitionForCreation, Competition>()
+                .ForMember(dest => dest.Date, opt => opt.MapFrom(
+                    srt => DateTime.Parse(srt.Date)));
 
             CreateMap<ContestantCompetition, ContestantCompetitionForDisplay>();
             CreateMap<ContestantCompetitionForCreation, ContestantCompetition>();
-
         }
 
     }

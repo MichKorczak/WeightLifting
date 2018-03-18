@@ -7,7 +7,7 @@ namespace Services.Services.Calculations
 {
     public class Sincler
     {
-        public decimal CalculationSincler(ContestandCompetition contestandCompetition, Attempt attempt)
+        public decimal CalculationSincler(ContestantCompetition contestandCompetition, Attempt attempt)
         {
             var weight = contestandCompetition.Weight;
 
