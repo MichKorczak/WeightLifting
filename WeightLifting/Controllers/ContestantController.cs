@@ -4,7 +4,6 @@ using AutoMapper;
 using Services.Services.Interfaces;
 using Data.DataTransferObject;
 using Data.Models;
-using System.Linq;
 using System;
 
 namespace WeightLifting.Controllers
@@ -23,14 +22,14 @@ namespace WeightLifting.Controllers
         }
 
         [HttpGet]
-        public async Task<IActionResult> GetContestant()
+        public async Task<IActionResult> Get()
         {
             var contestants = await contestantServis.GetContestants();
             return Ok(contestants);
         }
 
         [HttpGet("{lastName}", Name = "GetContestantByName")]
-        public async Task<IActionResult> GetContestantByLastName(string lastName)
+        public async Task<IActionResult> Get(string lastName)
         {
             var contestant = await contestantServis.GetContestantsByName(lastName);
             return Ok(contestant);
@@ -38,34 +37,50 @@ namespace WeightLifting.Controllers
 
 
         [HttpPost]
-        public async Task<IActionResult> Post([FromBody] ContestantForCreation contestand)
+        public async Task<IActionResult> Post([FromBody] ContestantForCreation contestant)
         {
-            if (!ModelState.IsValid || contestand == null)
+            if (!ModelState.IsValid || contestant == null)
                 return BadRequest();
 
-            var contestandToAdd = mapper.Map<Contestant>(contestand);
-            await contestantServis.AddContestant(contestandToAdd);
+            var contestandToAdd = mapper.Map<Contestant>(contestant);
+            var value = await contestantServis.AddContestant(contestandToAdd);
+            if (value >= 0)
+            {
+                return StatusCode(500, "Wystąpił bład w zapisie");
+            }
             var contestantForDisplay = mapper.Map<ContestantForDisplay>(contestandToAdd);
             return Ok(contestantForDisplay);
         }
 
         [HttpDelete("{id}")]
-        public async Task<IActionResult> DeleteContestant(Guid id)
+        public async Task<IActionResult> Delete(Guid id)
         {
-            if (id == null)
+            var contestant = contestantServis.GetContestantsById(id).Result;
+            if (contestant == null)
                 return BadRequest();
-            await contestantServis.DeleteContestant(id);
-            return new NoContentResult();
+            var value = await contestantServis.DeleteContestant(contestant);
+            if (value >= 0)
+            {
+                return StatusCode(500, "Wystąpił bład w zapisie");
+            }
+            return NoContent();
         }
 
         [HttpPut("{id}")]
         public async Task<IActionResult> UpdateContestant(Guid id, [FromBody] Contestant contestant)
         {
-            if (!ModelState.IsValid || contestant == null)
+            if (!ModelState.IsValid)
                 return BadRequest();
+            var originContestant = contestantServis.GetContestantsById(id).Result;
+            if (originContestant == null)
+                return BadRequest();
+            var value = await contestantServis.UpdateContestant(originContestant, contestant);
+            if (value >= 0)
+            {
+                return StatusCode(500, "Wystąpił bład w zapisie");
+            }
+            var contestantForDisplay = mapper.Map<ContestantForDisplay>(originContestant);
 
-            await contestantServis.UpdateContestant(id, contestant);
-            var contestantForDisplay = mapper.Map<ContestantForDisplay>(contestant);
             return Ok(contestantForDisplay);
         }
 

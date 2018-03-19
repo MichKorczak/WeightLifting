@@ -10,12 +10,14 @@ namespace Services.Services.Interfaces
     {
         Task<List<Contestant>> GetContestants();
 
+        Task<Contestant> GetContestantsById(Guid contestantId);
+
         Task<List<Contestant>> GetContestantsByName(string lastName);
 
-        Task AddContestant(Contestant contestant);
+        Task<int> AddContestant(Contestant contestant);
 
-        Task DeleteContestant(Guid id);
+        Task<int> DeleteContestant(Contestant contestant);
 
-        Task UpdateContestant(Guid id, [FromBody] Contestant contestant);
+        Task<int> UpdateContestant(Contestant originContestant, Contestant contestant);
     }
 }

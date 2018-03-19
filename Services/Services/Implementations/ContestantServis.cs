@@ -5,30 +5,31 @@ using System.Collections.Generic;
 using System.Threading.Tasks;
 using Data.Models;
 using System;
-using Microsoft.AspNetCore.Mvc;
 using System.Linq;
+using AutoMapper;
+
 
 namespace Services.Services.Implementations
 {
     public class ContestantServis : IContestantServis
     {
         private readonly ApplicationDbContext dbContext;
+        private readonly Mapper mapper;
 
         public ContestantServis(ApplicationDbContext dbContext)
         {
             this.dbContext = dbContext;
         }
-        public async Task AddContestant(Contestant contestant)
+        public async Task<int> AddContestant(Contestant contestant)
         {
             await dbContext.Contestants.AddAsync(contestant);
-            await dbContext.SaveChangesAsync();
+            return await dbContext.SaveChangesAsync();
         }
 
-        public async Task DeleteContestant(Guid id)
+        public async Task<int> DeleteContestant(Contestant contestant)
         {
-            var contestants = await dbContext.Contestants.FirstOrDefaultAsync(t => t.Id == id);
-            dbContext.Contestants.Remove(contestants);
-            await dbContext.SaveChangesAsync();
+            dbContext.Contestants.Remove(contestant);
+            return await dbContext.SaveChangesAsync();
         }
 
         public async Task<List<Contestant>> GetContestants()
@@ -37,23 +38,24 @@ namespace Services.Services.Implementations
             return contestants;
         }
 
-        public async Task<List<Contestant>> GetContestantsByName(string Name)
+        public async Task<Contestant> GetContestantsById(Guid contestantId)
         {
-            var contestants = await dbContext.Contestants.Where(t => $"{t.LastName}{t.FirstName}" == Name).ToListAsync();
+            var contestants = await dbContext.Contestants.FirstOrDefaultAsync(t => t.Id == contestantId);
             return contestants;
         }
 
-        public async Task UpdateContestant(Guid id, [FromBody] Contestant contestant)
+        public async Task<List<Contestant>> GetContestantsByName(string name)
         {
-            var originContestant = await dbContext.Contestants.FirstOrDefaultAsync(t => t.Id == id);
+            var contestants = await dbContext.Contestants.Where(t => $"{t.LastName}{" "}{t.FirstName}" == name).ToListAsync();
+            return contestants;
+        }
 
-            originContestant.FirstName = contestant.FirstName;
-            originContestant.LastName = contestant.LastName;
-            originContestant.DateOfBirthday = contestant.DateOfBirthday;
-            originContestant.Sex = contestant.Sex;
+        public async Task<int> UpdateContestant(Contestant originContestant, Contestant contestant)
+        {
+            mapper.DefaultContext(originContestant = contestant);
 
             dbContext.Contestants.Update(originContestant);
-            await dbContext.SaveChangesAsync();
+            return await dbContext.SaveChangesAsync();
         }
     } 
 }
