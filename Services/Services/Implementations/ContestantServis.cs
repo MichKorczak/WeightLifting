@@ -14,7 +14,6 @@ namespace Services.Services.Implementations
     public class ContestantServis : IContestantServis
     {
         private readonly ApplicationDbContext dbContext;
-        private readonly Mapper mapper;
 
         public ContestantServis(ApplicationDbContext dbContext)
         {
@@ -52,7 +51,7 @@ namespace Services.Services.Implementations
 
         public async Task<int> UpdateContestant(Contestant originContestant, Contestant contestant)
         {
-            mapper.DefaultContext(originContestant = contestant);
+            Mapper.Map(contestant, originContestant);
 
             dbContext.Contestants.Update(originContestant);
             return await dbContext.SaveChangesAsync();
