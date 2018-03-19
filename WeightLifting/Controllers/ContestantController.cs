@@ -22,14 +22,14 @@ namespace WeightLifting.Controllers
         }
 
         [HttpGet]
-        public async Task<IActionResult> Get()
+        public async Task<IActionResult> GetContestant()
         {
             var contestants = await contestantServis.GetContestants();
             return Ok(contestants);
         }
 
         [HttpGet("{lastName}", Name = "GetContestantByName")]
-        public async Task<IActionResult> Get(string lastName)
+        public async Task<IActionResult> GetContestant(string lastName)
         {
             var contestant = await contestantServis.GetContestantsByName(lastName);
             return Ok(contestant);
@@ -44,7 +44,7 @@ namespace WeightLifting.Controllers
 
             var contestandToAdd = mapper.Map<Contestant>(contestant);
             var value = await contestantServis.AddContestant(contestandToAdd);
-            if (value >= 0)
+            if (value <= 0)
             {
                 return StatusCode(500, "Wystąpił bład w zapisie");
             }
@@ -53,13 +53,13 @@ namespace WeightLifting.Controllers
         }
 
         [HttpDelete("{id}")]
-        public async Task<IActionResult> Delete(Guid id)
+        public async Task<IActionResult> DeleteContestant(Guid id)
         {
             var contestant = contestantServis.GetContestantsById(id).Result;
             if (contestant == null)
                 return BadRequest();
             var value = await contestantServis.DeleteContestant(contestant);
-            if (value >= 0)
+            if (value <= 0)
             {
                 return StatusCode(500, "Wystąpił bład w zapisie");
             }
@@ -75,7 +75,7 @@ namespace WeightLifting.Controllers
             if (originContestant == null)
                 return BadRequest();
             var value = await contestantServis.UpdateContestant(originContestant, contestant);
-            if (value >= 0)
+            if (value <= 0)
             {
                 return StatusCode(500, "Wystąpił bład w zapisie");
             }

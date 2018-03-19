@@ -1,4 +1,5 @@
 ﻿using Data.Models;
+using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 
@@ -8,6 +9,12 @@ namespace Services.Services.Interfaces
     {
         Task<List<Attempt>> GetAttempt();
 
-        Task AddAttempt(Attempt attempt);
+        Task<Attempt> GetAttemptById(Guid attemptId);
+
+        Task<int> AddAttempt(Attempt attempt);
+
+        Task<int> DeleteAttempt(Attempt attempt);
+
+        Task<int> UpdateAttempt(Attempt originAttempt, Attempt attempt);
     }
 }

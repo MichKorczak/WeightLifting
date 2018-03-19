@@ -4,6 +4,7 @@ using AutoMapper;
 using Services.Services.Interfaces;
 using Data.DataTransferObject;
 using Data.Models;
+using System;
 
 namespace WeightLifting.Controllers
 {
@@ -34,8 +35,44 @@ namespace WeightLifting.Controllers
                 return BadRequest();
 
             var competitionToAdd = mapper.Map<Competition>(competition);
-            await competitionServis.AddCompetition(competitionToAdd);
+            var value = await competitionServis.AddCompetition(competitionToAdd);
+            if (value <= 0)
+            {
+                return StatusCode(500, "Wystąpił bład w zapisie");
+            }
             var competitionForDisplay = mapper.Map<ContestantForDisplay>(competitionToAdd);
+            return Ok(competitionForDisplay);
+        }
+
+        [HttpDelete("{id}")]
+        public async Task<IActionResult> DeleteCompetition(Guid id)
+        {
+            var competition = competitionServis.GetCompetitionById(id).Result;
+            if (competition == null)
+                return BadRequest();
+            var value = await competitionServis.DeleteCompetition(competition);
+            if (value <= 0)
+            {
+                return StatusCode(500, "Wystąpił bład w zapisie");
+            }
+            return NoContent();
+        }
+
+        [HttpPut("{id}")]
+        public async Task<IActionResult> UpdateCompetition(Guid id, [FromBody] Competition competition)
+        {
+            if (!ModelState.IsValid)
+                return BadRequest();
+            var originCompetition = competitionServis.GetCompetitionById(id).Result;
+            if (originCompetition == null)
+                return BadRequest();
+            var value = await competitionServis.UpdateCompetition(originCompetition, competition);
+            if (value <= 0)
+            {
+                return StatusCode(500, "Wystąpił bład w zapisie");
+            }
+            var competitionForDisplay = mapper.Map<CompetitionForDisplay>(originCompetition);
+
             return Ok(competitionForDisplay);
         }
     }
