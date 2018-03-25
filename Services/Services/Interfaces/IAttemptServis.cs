@@ -15,6 +15,6 @@ namespace Services.Services.Interfaces
 
         Task<int> DeleteAttempt(Attempt attempt);
 
-        Task<int> UpdateAttempt(Attempt originAttempt, Attempt attempt);
+        Task<bool> SaveChangesContestantAsync();
     }
 }

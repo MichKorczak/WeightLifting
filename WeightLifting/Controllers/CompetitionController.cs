@@ -38,7 +38,7 @@ namespace WeightLifting.Controllers
             var value = await competitionServis.AddCompetition(competitionToAdd);
             if (value <= 0)
             {
-                return StatusCode(500, "Wystąpił bład w zapisie");
+                return StatusCode(500, "Fault while saving...");
             }
             var competitionForDisplay = mapper.Map<ContestantForDisplay>(competitionToAdd);
             return Ok(competitionForDisplay);
@@ -53,23 +53,23 @@ namespace WeightLifting.Controllers
             var value = await competitionServis.DeleteCompetition(competition);
             if (value <= 0)
             {
-                return StatusCode(500, "Wystąpił bład w zapisie");
+                return StatusCode(500, "Fault while saving...");
             }
             return NoContent();
         }
 
         [HttpPut("{id}")]
-        public async Task<IActionResult> UpdateCompetition(Guid id, [FromBody] Competition competition)
+        public async Task<IActionResult> UpdateCompetition(Guid id, [FromBody] CompetitionForUpdate competition)
         {
             if (!ModelState.IsValid)
                 return BadRequest();
             var originCompetition = competitionServis.GetCompetitionById(id).Result;
             if (originCompetition == null)
                 return BadRequest();
-            var value = await competitionServis.UpdateCompetition(originCompetition, competition);
-            if (value <= 0)
+            Mapper.Map(originCompetition, competition);
+            if (!await competitionServis.SaveChangesCompetitionAsync())
             {
-                return StatusCode(500, "Wystąpił bład w zapisie");
+                return StatusCode(500, "Fault while saving...");
             }
             var competitionForDisplay = mapper.Map<CompetitionForDisplay>(originCompetition);
 

@@ -6,7 +6,6 @@ using System.Threading.Tasks;
 using Data.Models;
 using System;
 using System.Linq;
-using AutoMapper;
 
 
 namespace Services.Services.Implementations
@@ -45,16 +44,13 @@ namespace Services.Services.Implementations
 
         public async Task<List<Contestant>> GetContestantsByName(string name)
         {
-            var contestants = await dbContext.Contestants.Where(t => $"{t.LastName}{" "}{t.FirstName}" == name).ToListAsync();
+            var contestants = await dbContext.Contestants.Where(t => $"{t.LastName}{"r "}{t.FirstName}" == name).ToListAsync();
             return contestants;
         }
 
-        public async Task<int> UpdateContestant(Contestant originContestant, Contestant contestant)
+        public async Task<bool> SaveChangesContestantAsync()
         {
-            Mapper.Map(contestant, originContestant);
-
-            dbContext.Contestants.Update(originContestant);
-            return await dbContext.SaveChangesAsync();
+            return await dbContext.SaveChangesAsync() >= 0;
         }
     } 
 }

@@ -30,6 +30,11 @@ namespace Services.Services.Implementations
             return await dbContext.SaveChangesAsync();
         }
 
+        public async Task<bool> SaveChangesContestanCompetitionAsync()
+        {
+            return await dbContext.SaveChangesAsync() >= 0;
+        }
+
         public async Task<List<ContestantCompetition>> GetContestantCompetition()
         {
             var contestandComptetition = await dbContext.ContestantCompetitions.ToListAsync();
@@ -40,14 +45,6 @@ namespace Services.Services.Implementations
         {
             var contestantCompetition = await dbContext.ContestantCompetitions.FirstOrDefaultAsync(t => t.Id == contestantCompetitionId);
             return contestantCompetition;
-        }
-
-        public async Task<int> UpdateContestantCompetition(ContestantCompetition originContestantCompetition, ContestantCompetition contestantCompetition)
-        {
-            Mapper.Map(contestantCompetition, originContestantCompetition);
-
-            dbContext.ContestantCompetitions.Update(originContestantCompetition);
-            return await dbContext.SaveChangesAsync();
         }
     }
 }

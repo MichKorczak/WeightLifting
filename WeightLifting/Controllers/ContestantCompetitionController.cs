@@ -38,7 +38,7 @@ namespace WeightLifting.Controllers
             var value = await contestantCompetitionServis.AddConstestandCompetition(contestandCompetitionToAdd);
             if (value <= 0)
             {
-                return StatusCode(500, "Wystąpił bład w zapisie");
+                return StatusCode(500, "Fault while saving...");
             }
             var contestandCompetitionForDisplay = mapper.Map<ContestantCompetitionForDisplay>(contestandCompetitionToAdd);
             return Ok(contestandCompetitionForDisplay);
@@ -53,23 +53,23 @@ namespace WeightLifting.Controllers
             var value = await contestantCompetitionServis.DeleteContestantCompetition(contestantCompetition);
             if (value <= 0)
             {
-                return StatusCode(500, "Wystąpił bład w zapisie");
+                return StatusCode(500, "Fault while saving...");
             }
             return NoContent();
         }
 
         [HttpPut("{id}")]
-        public async Task<IActionResult> UpdateContestantCompetition(Guid id, [FromBody] ContestantCompetition contestantCompetition)
+        public async Task<IActionResult> UpdateContestantCompetition(Guid id, [FromBody] ContestantCompetitionForUpdate contestantCompetition)
         {
             if (!ModelState.IsValid)
                 return BadRequest();
-            var originContestantCompetition = contestantCompetitionServis.GetContestantCompetitionById(id).Result;            
+            var originContestantCompetition = contestantCompetitionServis.GetContestantCompetitionById(id).Result;
             if (originContestantCompetition == null)
                 return BadRequest();
-            var value = await contestantCompetitionServis.UpdateContestantCompetition(originContestantCompetition, contestantCompetition);
-            if (value <= 0)
+            Mapper.Map(originContestantCompetition, contestantCompetition);
+            if (!await contestantCompetitionServis.SaveChangesContestanCompetitionAsync())
             {
-                return StatusCode(500, "Wystąpił bład w zapisie");
+                return StatusCode(500, "Fault while saving...");
             }
             var contestantCompetitionForDisplay = mapper.Map<ContestantCompetitionForDisplay>(originContestantCompetition);
 

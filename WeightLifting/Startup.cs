@@ -1,11 +1,13 @@
-﻿using Microsoft.AspNetCore.Builder;
+﻿using System;
+using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Data.DataAccessLayer;
 using Microsoft.EntityFrameworkCore;
-using Services.Provider;
 using AutoMapper;
+using Data.User;
+using Microsoft.AspNetCore.Identity;
 using Services.Services.Interfaces;
 using Services.Services.Implementations;
 
@@ -24,8 +26,36 @@ namespace WeightLifting
         public void ConfigureServices(IServiceCollection services)
         {
             
-            services.AddDbContext<ApplicationDbContext>(options => options.UseSqlServer(Configuration.GetConnectionString("DefaultConnection")));
+            services.AddDbContext<ApplicationDbContext>(
+                options => options.UseSqlServer(Configuration.GetConnectionString("DefaultConnection")));
+            services.AddIdentity<ApplicationUser, IdentityRole>()
+                .AddEntityFrameworkStores<ApplicationDbContext>()
+                .AddDefaultTokenProviders();
+            services.Configure<IdentityOptions>(option =>
+            {
+                option.Password.RequireDigit = true;
+                option.Password.RequiredLength = 8;
+                option.Password.RequireNonAlphanumeric = false;
+                option.Password.RequireUppercase = true;
+                option.Password.RequiredUniqueChars = 6;
+
+                option.Lockout.DefaultLockoutTimeSpan = TimeSpan.FromHours(30);
+                option.Lockout.MaxFailedAccessAttempts = 10;
+                option.Lockout.AllowedForNewUsers = true;
+
+                option.User.RequireUniqueEmail = true;
+            });
+            services.ConfigureApplicationCookie(optional =>
+            {
+                optional.Cookie.HttpOnly = true;
+                optional.ExpireTimeSpan = TimeSpan.FromMinutes(30);
+
+                optional.LoginPath = "/Account/Login";
+                optional.AccessDeniedPath = "/Account/AccessDenied";
+                optional.SlidingExpiration = true;
+            });
             services.AddAutoMapper();
+            services.AddTransient<IEmailSender, EmailSender>();
             services.AddTransient<IContestantServis, ContestantServis>();
             services.AddTransient<IAttemptServis, AttemptServis>();
             services.AddTransient<ICompetitionServis, CompetitionServis>();
@@ -54,8 +84,6 @@ namespace WeightLifting
                     name: "default",
                     template: "{conteroller}/{action=Index}/{id}");
             });
-
-            DBInitializeProvider.Init(dbContext);
         }
     }
 }

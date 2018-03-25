@@ -5,7 +5,6 @@ using System.Threading.Tasks;
 using Data.DataAccessLayer;
 using Microsoft.EntityFrameworkCore;
 using System;
-using AutoMapper;
 
 namespace Services.Services.Implementations
 {
@@ -29,6 +28,11 @@ namespace Services.Services.Implementations
             return await dbContext.SaveChangesAsync();
         }
 
+        public async Task<bool> SaveChangesContestantAsync()
+        {
+            return await dbContext.SaveChangesAsync() >= 0;
+        }
+
         public async Task<List<Attempt>> GetAttempt()
         {
             var attempts = await dbContext.Attempts.ToListAsync();
@@ -39,14 +43,6 @@ namespace Services.Services.Implementations
         {
             var attempts = await dbContext.Attempts.FirstOrDefaultAsync(t => t.Id == attemptId);
             return attempts;
-        }
-
-        public async Task<int> UpdateAttempt(Attempt originAttempt, Attempt attempt)
-        {
-            Mapper.Map(attempt, originAttempt);
-
-            dbContext.Attempts.Update(originAttempt);
-            return await dbContext.SaveChangesAsync();
         }
     }
 }

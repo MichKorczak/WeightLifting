@@ -18,6 +18,6 @@ namespace Services.Services.Interfaces
 
         Task<int> DeleteCompetition(Competition competition);
 
-        Task<int> UpdateCompetition(Competition originCompetition, Competition competition);
+        Task<bool> SaveChangesCompetitionAsync();
     }
 }
