@@ -44,7 +44,7 @@ namespace WeightLifting
                 option.Lockout.AllowedForNewUsers = true;
 
                 option.User.RequireUniqueEmail = true;
-            });
+            }); // tego wszystko nie należało by wypisać w innym miejscu? 
             services.ConfigureApplicationCookie(optional =>
             {
                 optional.Cookie.HttpOnly = true;
@@ -53,9 +53,9 @@ namespace WeightLifting
                 optional.LoginPath = "/Account/Login";
                 optional.AccessDeniedPath = "/Account/AccessDenied";
                 optional.SlidingExpiration = true;
-            });
+            }); // tego wszystko nie należało by wypisać w innym miejscu? 
             services.AddAutoMapper();
-            services.AddTransient<IEmailSender, EmailSender>();
+            services.AddTransient<IEmailSender, UserServices>();
             services.AddTransient<IContestantServis, ContestantServis>();
             services.AddTransient<IAttemptServis, AttemptServis>();
             services.AddTransient<ICompetitionServis, CompetitionServis>();

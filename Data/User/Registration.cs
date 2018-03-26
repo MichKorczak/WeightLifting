@@ -29,5 +29,8 @@ namespace Data.User
         [Required]
         [RegularExpression(@"^[A-Z]+[a-z""'-\s-]*$")]
         public string LastName { get; set; }
+
+        // nie wiem czy nie należało by dodać jeszcze jakiegoś ID
+
     }
 }

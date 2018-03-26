@@ -14,5 +14,6 @@ namespace Data.User
 
         [Display(Name = "Remember me?")]
         public bool RememberMe { get; set; }
+        // nie wiem czy nie należało by dodać jeszcze jakiegoś ID 
     }
 }
