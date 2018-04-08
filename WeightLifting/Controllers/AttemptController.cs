@@ -22,9 +22,9 @@ namespace WeightLifting.Controllers
         }
 
         [HttpGet]
-        public async Task<IActionResult> GetAttempt()
+        public async Task<IActionResult> Get()
         {
-            var attempt = await attemptServis.GetAttempt();
+            var attempt = mapper.Map<AttemptForDisplay>(await attemptServis.GetAttemptsAsync());
             return Ok(attempt);
         }
 
@@ -35,42 +35,39 @@ namespace WeightLifting.Controllers
                 return BadRequest();
 
             var attemptToAdd = mapper.Map<Attempt>(attempt);
-            var value = await attemptServis.AddAttempt(attemptToAdd);
-            if (value <= 0)
-            {
+
+            await attemptServis.AddAttemptAsync(attemptToAdd);
+            if (!await attemptServis.SaveChanges())
                 return StatusCode(500, "Fault while saving...");
-            }
+
             var attemptForDisplay = mapper.Map<ContestantForDisplay>(attemptToAdd);
             return Ok(attemptForDisplay);
         }
 
         [HttpDelete("{id}")]
-        public async Task<IActionResult> DeleteAttempt(Guid id)
+        public async Task<IActionResult> Delete(Guid id)
         {
-            var attempt = attemptServis.GetAttemptById(id).Result;
+            var attempt = attemptServis.GetAttemptByIdAsync(id).Result;
             if (attempt == null)
                 return BadRequest();
-            var value = await attemptServis.DeleteAttempt(attempt);
-            if (value <= 0)
-            {
+            await attemptServis.DeleteAttemptAsync(attempt);
+            if (!await attemptServis.SaveChanges())
                 return StatusCode(500, "Fault while saving...");
-            }
             return NoContent();
         }
 
         [HttpPut("{id}")]
-        public async Task<IActionResult> UpdateAttempt(Guid id, [FromBody] AttemptForUpdate attempt)
+        public async Task<IActionResult> Update(Guid id, [FromBody] Attempt attempt)
         {
             if (!ModelState.IsValid)
                 return BadRequest();
-            var originAttempt = attemptServis.GetAttemptById(id).Result;
+            var originAttempt = attemptServis.GetAttemptByIdAsync(id);
             if (originAttempt == null)
                 return BadRequest();
-            Mapper.Map(originAttempt, attempt);
-            if (!await attemptServis.SaveChangesContestantAsync())
-            {
+
+            mapper.Map(originAttempt, attempt);
+            if (!await attemptServis.SaveChanges())
                 return StatusCode(500, "Fault while saving...");
-            }
             var attemptForDisplay = mapper.Map<AttemptForDisplay>(originAttempt);
 
             return Ok(attemptForDisplay);

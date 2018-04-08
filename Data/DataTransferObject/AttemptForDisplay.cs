@@ -1,5 +1,4 @@
 ﻿using Data.Enums;
-using System;
 
 namespace Data.DataTransferObject
 {

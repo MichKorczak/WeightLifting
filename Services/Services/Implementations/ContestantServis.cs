@@ -1,12 +1,11 @@
-﻿using Data.DataAccessLayer;
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Threading.Tasks;
+using Data.DataAccessLayer;
+using Data.Models;
 using Microsoft.EntityFrameworkCore;
 using Services.Services.Interfaces;
-using System.Collections.Generic;
-using System.Threading.Tasks;
-using Data.Models;
-using System;
-using System.Linq;
-
 
 namespace Services.Services.Implementations
 {
@@ -18,40 +17,40 @@ namespace Services.Services.Implementations
         {
             this.dbContext = dbContext;
         }
-        public async Task<int> AddContestant(Contestant contestant)
+
+        public async Task AddContestantAsync(Contestant contestant)
         {
             await dbContext.Contestants.AddAsync(contestant);
-            return await dbContext.SaveChangesAsync();
         }
 
-        public async Task<int> DeleteContestant(Contestant contestant)
+        public async Task<int> DeleteContestantAsync(Contestant contestant)
         {
             dbContext.Contestants.Remove(contestant);
             return await dbContext.SaveChangesAsync();
         }
 
-        public async Task<List<Contestant>> GetContestants()
+        public async Task<List<Contestant>> GetContestantsAsync()
         {
             var contestants = await dbContext.Contestants.ToListAsync();
             return contestants;
         }
 
-        public async Task<Contestant> GetContestantsById(Guid contestantId)
+        public async Task<Contestant> GetContestantsByIdAsync(Guid contestantId)
         {
             var contestants = await dbContext.Contestants.FirstOrDefaultAsync(t => t.Id == contestantId);
             return contestants;
         }
 
-        public async Task<List<Contestant>> GetContestantsByName(string name)
+        public async Task<List<Contestant>> GetContestantsByNameAsync(string name)
         {
-            var contestants = await dbContext.Contestants.Where(t => $"{t.LastName}{"r "}{t.FirstName}" == name).ToListAsync();
+            var contestants = await dbContext.Contestants.Where(t => $"{t.LastName}{" "}{t.FirstName}" == name)
+                .ToListAsync();
             return contestants;
         }
 
-        public async Task<bool> SaveChangesContestantAsync()
+        public async Task<bool> SaveChanges()
         {
             return await dbContext.SaveChangesAsync() >= 0;
         }
-    } 
+    }
 }
-

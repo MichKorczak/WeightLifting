@@ -1,20 +1,20 @@
-﻿using Data.Models;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
+using Data.Models;
 
 namespace Services.Services.Interfaces
 {
     public interface IAttemptServis
     {
-        Task<List<Attempt>> GetAttempt();
+        Task<List<Attempt>> GetAttemptsAsync(); 
 
-        Task<Attempt> GetAttemptById(Guid attemptId);
+        Task<Attempt> GetAttemptByIdAsync(Guid attemptId); 
 
-        Task<int> AddAttempt(Attempt attempt);
+        Task AddAttemptAsync(Attempt attempt);
 
-        Task<int> DeleteAttempt(Attempt attempt);
+        Task<int> DeleteAttemptAsync(Attempt attempt);
 
-        Task<bool> SaveChangesContestantAsync();
+        Task<bool> SaveChanges();
     }
 }

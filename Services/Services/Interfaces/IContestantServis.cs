@@ -1,23 +1,22 @@
-﻿using Data.Models;
-using Microsoft.AspNetCore.Mvc;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
+using Data.Models;
 
 namespace Services.Services.Interfaces
 {
     public interface IContestantServis
     {
-        Task<List<Contestant>> GetContestants();
+        Task<List<Contestant>> GetContestantsAsync(); 
 
-        Task<Contestant> GetContestantsById(Guid contestantId);
+        Task<Contestant> GetContestantsByIdAsync(Guid contestantId);
 
-        Task<List<Contestant>> GetContestantsByName(string lastName);
+        Task<List<Contestant>> GetContestantsByNameAsync(string lastName);
 
-        Task<int> AddContestant(Contestant contestant);
+        Task AddContestantAsync(Contestant contestant);  
 
-        Task<int> DeleteContestant(Contestant contestant);
+        Task<int> DeleteContestantAsync(Contestant contestant);
 
-        Task<bool> SaveChangesContestantAsync();
+        Task<bool> SaveChanges(); 
     }
 }

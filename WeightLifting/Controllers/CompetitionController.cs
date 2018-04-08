@@ -5,6 +5,7 @@ using Services.Services.Interfaces;
 using Data.DataTransferObject;
 using Data.Models;
 using System;
+using Services.Services.Implementations;
 
 namespace WeightLifting.Controllers
 {
@@ -22,9 +23,9 @@ namespace WeightLifting.Controllers
         }
 
         [HttpGet]
-        public async Task<IActionResult> GetCompetition()
+        public async Task<IActionResult> Get()
         {
-            var attempt = await competitionServis.GetCompetition();
+            var attempt = mapper.Map<AttemptForDisplay>(await competitionServis.GetCompetitionAsync());
             return Ok(attempt);
         }
 
@@ -35,44 +36,42 @@ namespace WeightLifting.Controllers
                 return BadRequest();
 
             var competitionToAdd = mapper.Map<Competition>(competition);
-            var value = await competitionServis.AddCompetition(competitionToAdd);
-            if (value <= 0)
-            {
+            await competitionServis.AddCompetitionAsync(competitionToAdd);
+            if (!await competitionServis.SaveChanges())
                 return StatusCode(500, "Fault while saving...");
-            }
+
             var competitionForDisplay = mapper.Map<ContestantForDisplay>(competitionToAdd);
             return Ok(competitionForDisplay);
         }
 
         [HttpDelete("{id}")]
-        public async Task<IActionResult> DeleteCompetition(Guid id)
+        public async Task<IActionResult> Delete(Guid id)
         {
-            var competition = competitionServis.GetCompetitionById(id).Result;
+            var competition = competitionServis.GetCompetitionByIdAsync(id).Result;
             if (competition == null)
                 return BadRequest();
-            var value = await competitionServis.DeleteCompetition(competition);
-            if (value <= 0)
-            {
+
+            await competitionServis.DeleteCompetitionAsync(competition);
+            if (!await competitionServis.SaveChanges())
                 return StatusCode(500, "Fault while saving...");
-            }
+
             return NoContent();
         }
 
         [HttpPut("{id}")]
-        public async Task<IActionResult> UpdateCompetition(Guid id, [FromBody] CompetitionForUpdate competition)
+        public async Task<IActionResult> Update(Guid id, [FromBody] Competition competition)
         {
             if (!ModelState.IsValid)
                 return BadRequest();
-            var originCompetition = competitionServis.GetCompetitionById(id).Result;
+            var originCompetition = competitionServis.GetCompetitionByIdAsync(id);
             if (originCompetition == null)
                 return BadRequest();
-            Mapper.Map(originCompetition, competition);
-            if (!await competitionServis.SaveChangesCompetitionAsync())
-            {
-                return StatusCode(500, "Fault while saving...");
-            }
-            var competitionForDisplay = mapper.Map<CompetitionForDisplay>(originCompetition);
 
+            mapper.Map(originCompetition, competition);
+            if (!await competitionServis.SaveChanges())
+                return StatusCode(500, "Fault while saving...");
+
+            var competitionForDisplay = mapper.Map<CompetitionForDisplay>(originCompetition);
             return Ok(competitionForDisplay);
         }
     }

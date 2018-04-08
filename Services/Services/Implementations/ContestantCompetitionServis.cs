@@ -1,11 +1,10 @@
-﻿using AutoMapper;
+﻿using System;
+using System.Collections.Generic;
+using System.Threading.Tasks;
 using Data.DataAccessLayer;
 using Data.Models;
 using Microsoft.EntityFrameworkCore;
 using Services.Services.Interfaces;
-using System;
-using System.Collections.Generic;
-using System.Threading.Tasks;
 
 namespace Services.Services.Implementations
 {
@@ -18,30 +17,29 @@ namespace Services.Services.Implementations
             this.dbContext = dbContext;
         }
 
-        public async Task<int> AddConstestandCompetition(ContestantCompetition contestantCompetition)
+        public async Task AddConstestandCompetitionAsync(ContestantCompetition contestantCompetition)
         {
             await dbContext.ContestantCompetitions.AddAsync(contestantCompetition);
-            return await dbContext.SaveChangesAsync();
         }
 
-        public async Task<int> DeleteContestantCompetition(ContestantCompetition contestandCompetition)
+        public async Task<int> DeleteContestantCompetitionAsync(ContestantCompetition contestandCompetition)
         {
             dbContext.ContestantCompetitions.Remove(contestandCompetition);
             return await dbContext.SaveChangesAsync();
         }
 
-        public async Task<bool> SaveChangesContestanCompetitionAsync()
+        public async Task<bool> SaveChanges()
         {
             return await dbContext.SaveChangesAsync() >= 0;
         }
 
-        public async Task<List<ContestantCompetition>> GetContestantCompetition()
+        public async Task<List<ContestantCompetition>> GetContestantCompetitionAsync()
         {
             var contestandComptetition = await dbContext.ContestantCompetitions.ToListAsync();
             return contestandComptetition;
         }
 
-        public async Task<ContestantCompetition> GetContestantCompetitionById(Guid contestantCompetitionId)
+        public async Task<ContestantCompetition> GetContestantCompetitionByIdAsync(Guid contestantCompetitionId)
         {
             var contestantCompetition = await dbContext.ContestantCompetitions.FirstOrDefaultAsync(t => t.Id == contestantCompetitionId);
             return contestantCompetition;

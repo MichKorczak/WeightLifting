@@ -1,20 +1,20 @@
-﻿using Data.Models;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
+using Data.Models;
 
 namespace Services.Services.Interfaces
 {
     public interface IContestantCompetitionServis
     {
-        Task<List<ContestantCompetition>> GetContestantCompetition();
+        Task<List<ContestantCompetition>> GetContestantCompetitionAsync();
 
-        Task<ContestantCompetition> GetContestantCompetitionById(Guid contestantCompetitionId);
+        Task<ContestantCompetition> GetContestantCompetitionByIdAsync(Guid contestantCompetitionId);
 
-        Task<int> AddConstestandCompetition(ContestantCompetition contestandCompetition);
+        Task AddConstestandCompetitionAsync(ContestantCompetition contestandCompetition);
 
-        Task<int> DeleteContestantCompetition(ContestantCompetition contestandCompetition);
+        Task<int> DeleteContestantCompetitionAsync(ContestantCompetition contestandCompetition);
 
-        Task<bool> SaveChangesContestanCompetitionAsync();
+        Task<bool> SaveChanges();
     }
 }

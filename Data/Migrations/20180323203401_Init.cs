@@ -1,5 +1,5 @@
-﻿using Microsoft.EntityFrameworkCore.Migrations;
-using System;
+﻿using System;
+using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace Data.Migrations
 {
@@ -8,21 +8,18 @@ namespace Data.Migrations
         protected override void Up(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.CreateTable(
-                name: "Competitions",
-                columns: table => new
+                "Competitions",
+                table => new
                 {
                     Id = table.Column<Guid>(nullable: false),
                     Date = table.Column<DateTime>(nullable: false),
                     Name = table.Column<string>(nullable: true)
                 },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_Competitions", x => x.Id);
-                });
+                constraints: table => { table.PrimaryKey("PK_Competitions", x => x.Id); });
 
             migrationBuilder.CreateTable(
-                name: "Contestants",
-                columns: table => new
+                "Contestants",
+                table => new
                 {
                     Id = table.Column<Guid>(nullable: false),
                     DateOfBirthday = table.Column<DateTime>(nullable: false),
@@ -30,14 +27,11 @@ namespace Data.Migrations
                     LastName = table.Column<string>(nullable: true),
                     Sex = table.Column<int>(nullable: false)
                 },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_Contestants", x => x.Id);
-                });
+                constraints: table => { table.PrimaryKey("PK_Contestants", x => x.Id); });
 
             migrationBuilder.CreateTable(
-                name: "Attempts",
-                columns: table => new
+                "Attempts",
+                table => new
                 {
                     Id = table.Column<Guid>(nullable: false),
                     CompetitionId = table.Column<Guid>(nullable: false),
@@ -49,16 +43,16 @@ namespace Data.Migrations
                 {
                     table.PrimaryKey("PK_Attempts", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_Attempts_Competitions_CompetitionId",
-                        column: x => x.CompetitionId,
-                        principalTable: "Competitions",
-                        principalColumn: "Id",
+                        "FK_Attempts_Competitions_CompetitionId",
+                        x => x.CompetitionId,
+                        "Competitions",
+                        "Id",
                         onDelete: ReferentialAction.Cascade);
                 });
 
             migrationBuilder.CreateTable(
-                name: "ContestantCompetitions",
-                columns: table => new
+                "ContestantCompetitions",
+                table => new
                 {
                     Id = table.Column<Guid>(nullable: false),
                     Club = table.Column<string>(nullable: true),
@@ -71,48 +65,48 @@ namespace Data.Migrations
                 {
                     table.PrimaryKey("PK_ContestantCompetitions", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_ContestantCompetitions_Competitions_CompetitionId",
-                        column: x => x.CompetitionId,
-                        principalTable: "Competitions",
-                        principalColumn: "Id",
+                        "FK_ContestantCompetitions_Competitions_CompetitionId",
+                        x => x.CompetitionId,
+                        "Competitions",
+                        "Id",
                         onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
-                        name: "FK_ContestantCompetitions_Contestants_ContestandId",
-                        column: x => x.ContestandId,
-                        principalTable: "Contestants",
-                        principalColumn: "Id",
+                        "FK_ContestantCompetitions_Contestants_ContestandId",
+                        x => x.ContestandId,
+                        "Contestants",
+                        "Id",
                         onDelete: ReferentialAction.Cascade);
                 });
 
             migrationBuilder.CreateIndex(
-                name: "IX_Attempts_CompetitionId",
-                table: "Attempts",
-                column: "CompetitionId");
+                "IX_Attempts_CompetitionId",
+                "Attempts",
+                "CompetitionId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_ContestantCompetitions_CompetitionId",
-                table: "ContestantCompetitions",
-                column: "CompetitionId");
+                "IX_ContestantCompetitions_CompetitionId",
+                "ContestantCompetitions",
+                "CompetitionId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_ContestantCompetitions_ContestandId",
-                table: "ContestantCompetitions",
-                column: "ContestandId");
+                "IX_ContestantCompetitions_ContestandId",
+                "ContestantCompetitions",
+                "ContestandId");
         }
 
         protected override void Down(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.DropTable(
-                name: "Attempts");
+                "Attempts");
 
             migrationBuilder.DropTable(
-                name: "ContestantCompetitions");
+                "ContestantCompetitions");
 
             migrationBuilder.DropTable(
-                name: "Competitions");
+                "Competitions");
 
             migrationBuilder.DropTable(
-                name: "Contestants");
+                "Contestants");
         }
     }
 }

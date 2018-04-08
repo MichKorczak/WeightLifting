@@ -1,7 +1,4 @@
 ﻿using Data.Models;
-using System;
-using System.Collections.Generic;
-using System.Text;
 
 namespace Services.Services.Calculations
 {
@@ -11,6 +8,7 @@ namespace Services.Services.Calculations
         {
             var weight = contestandCompetition.Weight;
 
+            // a tu co sie dzieje ?
 
             return 1;
         }

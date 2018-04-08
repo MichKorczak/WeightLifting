@@ -1,89 +1,84 @@
-﻿using System.Threading.Tasks;
-using Microsoft.AspNetCore.Mvc;
+﻿using System;
+using System.Threading.Tasks;
 using AutoMapper;
-using Services.Services.Interfaces;
 using Data.DataTransferObject;
 using Data.Models;
-using System;
+using Microsoft.AspNetCore.Mvc;
+using Services.Services.Interfaces;
 
 namespace WeightLifting.Controllers
 {
     [Produces("application/json")]
-    [Route("api/Contestant")]
-    public class ContestantController : Controller
+    [Route("api/Contestants")]
+    public class ContestantsController : Controller 
     {
-        private readonly IMapper mapper;
         private readonly IContestantServis contestantServis;
+        private readonly IMapper mapper;
 
-        public ContestantController(IMapper mapper, IContestantServis contestantServis)
+        public ContestantsController(IMapper mapper, IContestantServis contestantServis)
         {
             this.mapper = mapper;
             this.contestantServis = contestantServis;
         }
 
         [HttpGet]
-        public async Task<IActionResult> GetContestant()
-        {
-            var contestants = await contestantServis.GetContestants();
-            return Ok(contestants);
+        public async Task<IActionResult> Get() 
+        {   
+            var contestant = mapper.Map<ContestantForDisplay>(await contestantServis.GetContestantsAsync());          
+            return Ok(contestant);
         }
 
-        [HttpGet("{lastName}", Name = "GetContestantByName")]
-        public async Task<IActionResult> GetContestant(string lastName)
+        [HttpGet("{lastName}", Name = "GetContestantByName")] 
+        public async Task<IActionResult> Get(string lastName)
         {
-            var contestant = await contestantServis.GetContestantsByName(lastName);
+            var contestant = mapper.Map<ContestantCompetitionForDisplay>(await contestantServis.GetContestantsByNameAsync(lastName));
             return Ok(contestant);
         }
 
 
         [HttpPost]
-        public async Task<IActionResult> Post([FromBody] ContestantForCreation contestant)
+        public async Task<IActionResult> Post([FromBody] ContestantForCreation contestant) 
         {
             if (!ModelState.IsValid || contestant == null)
                 return BadRequest();
 
-            var contestandToAdd = mapper.Map<Contestant>(contestant);
-            var value = await contestantServis.AddContestant(contestandToAdd);
-            if (value <= 0)
-            {
+            var contestantToAdd = mapper.Map<Contestant>(contestant);
+
+            await contestantServis.AddContestantAsync(contestantToAdd);
+            if (!await contestantServis.SaveChanges())
                 return StatusCode(500, "Fault while saving...");
-            }
-            var contestantForDisplay = mapper.Map<ContestantForDisplay>(contestandToAdd);
+
+            var contestantForDisplay = mapper.Map<ContestantForDisplay>(contestantToAdd);
             return Ok(contestantForDisplay);
         }
 
         [HttpDelete("{id}")]
-        public async Task<IActionResult> DeleteContestant(Guid id)
+        public async Task<IActionResult> Delete(Guid id)
         {
-            var contestant = contestantServis.GetContestantsById(id).Result;
+            var contestant = await contestantServis.GetContestantsByIdAsync(id); 
             if (contestant == null)
                 return BadRequest();
-            var value = await contestantServis.DeleteContestant(contestant);
-            if (value <= 0)
-            {
+            await contestantServis.DeleteContestantAsync(contestant);
+            if (!await contestantServis.SaveChanges())
                 return StatusCode(500, "Fault while saving...");
-            }
             return NoContent();
         }
 
         [HttpPut("{id}")]
-        public async Task<IActionResult> UpdateContestant(Guid id, [FromBody] ContestantForUpdate contestant)
+        public async Task<IActionResult> Update(Guid id, [FromBody] ContestantForUpdate contestant)
         {
             if (!ModelState.IsValid)
                 return BadRequest();
-            var originContestant = contestantServis.GetContestantsById(id).Result;
+            var originContestant = await contestantServis.GetContestantsByIdAsync(id);
             if (originContestant == null)
                 return BadRequest();
 
             Mapper.Map(originContestant, contestant);
-            if (!await contestantServis.SaveChangesContestantAsync())
-            {
+            if (!await contestantServis.SaveChanges())
                 return StatusCode(500, "Fault while saving...");
-            }
             var contestantForDisplay = mapper.Map<ContestantForDisplay>(originContestant);
 
             return Ok(contestantForDisplay);
         }
-
     }
 }

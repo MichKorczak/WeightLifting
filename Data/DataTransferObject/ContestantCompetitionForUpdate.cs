@@ -1,14 +1,11 @@
-﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel.DataAnnotations;
-using System.Text;
+﻿using System.ComponentModel.DataAnnotations;
 
 namespace Data.DataTransferObject
 {
     public class ContestantCompetitionForUpdate
     {
-        [Required]
         public decimal Weight { get; set; }
+
         public string Club { get; set; }
     }
 }

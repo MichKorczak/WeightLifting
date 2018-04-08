@@ -1,5 +1,4 @@
 ﻿using Data.Models;
-using System;
 
 namespace Data.DataTransferObject
 {

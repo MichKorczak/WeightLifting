@@ -1,7 +1,7 @@
-﻿using AutoMapper;
+﻿using System;
+using AutoMapper;
 using Data.DataTransferObject;
 using Data.Models;
-using System;
 
 namespace WeightLifting
 {
@@ -28,13 +28,14 @@ namespace WeightLifting
                     srt => DateTime.Parse(srt.Date)));
             CreateMap<CompetitionForUpdate, Competition>()
                 .ForMember(dest => dest.Date, opt => opt.MapFrom(
-                srt => DateTime.Parse(srt.Date)));
+                    srt => DateTime.Parse(srt.Date)));
 
             CreateMap<ContestantCompetition, ContestantCompetitionForDisplay>();
             CreateMap<ContestantCompetitionForCreation, ContestantCompetition>();
             CreateMap<ContestantForUpdate, Contestant>();
 
+            CreateMap<Register, User>();
+            CreateMap<User, Login>();
         }
-
     }
 }

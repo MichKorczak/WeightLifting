@@ -8,10 +8,10 @@ namespace Data.Models
     {
         [Key]
         public Guid Id { get; set; }
+
         public DateTime Date { get; set; }
         public string Name { get; set; }
         public ICollection<ContestantCompetition> ContestantCompetition { get; set; }
         public ICollection<Attempt> Attempt { get; set; }
-
     }
 }

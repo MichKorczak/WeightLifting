@@ -1,16 +1,20 @@
-﻿using Data.Enums;
-using System.ComponentModel.DataAnnotations;
+﻿using System.ComponentModel.DataAnnotations;
+using Data.Enums;
 
 namespace Data.DataTransferObject
 {
     public class ContestantForCreation
     {
+        [Required] [MinLength(3)] public string FirstName { get; set; }
+
         [Required]
         [MinLength(3)]
-        public string FirstName { get; set; }
         public string LastName { get; set; }
+
+        [Required]
         public string DateOfBirthday { get; set; }
-        [EnumDataType(typeof(Sex))]
-        public Sex Sex { get; set; }
+
+        [Required]
+        [EnumDataType(typeof(Sex))] public Sex Sex { get; set; }
     }
 }

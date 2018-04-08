@@ -2,12 +2,12 @@
 
 namespace Data.DataTransferObject
 {
-    public class CompetitionForCreation
+    public class Login
     {
         [Required]
-        public string Date { get; set; }
+        public string EmailAddress { get; set; }
 
         [Required]
-        public string Name { get; set; }
+        public string Password { get; set; }
     }
 }

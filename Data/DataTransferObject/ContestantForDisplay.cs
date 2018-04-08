@@ -1,5 +1,5 @@
-﻿using Data.Enums;
-using System;
+﻿using System;
+using Data.Enums;
 
 namespace Data.DataTransferObject
 {
@@ -9,6 +9,5 @@ namespace Data.DataTransferObject
         public string Name { get; set; }
         public DateTime DateOfBirtch { get; set; }
         public Sex Sex { get; set; }
-
     }
 }

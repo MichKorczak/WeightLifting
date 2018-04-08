@@ -1,12 +1,11 @@
-﻿using Services.Services.Interfaces;
+﻿using System;
 using System.Collections.Generic;
-using Data.Models;
+using System.Linq;
 using System.Threading.Tasks;
 using Data.DataAccessLayer;
+using Data.Models;
 using Microsoft.EntityFrameworkCore;
-using System;
-using System.Linq;
-using AutoMapper;
+using Services.Services.Interfaces;
 
 namespace Services.Services.Implementations
 {
@@ -19,36 +18,35 @@ namespace Services.Services.Implementations
             this.dbContext = dbContext;
         }
 
-        public async Task<int> AddCompetition(Competition competition)
+        public async Task AddCompetitionAsync(Competition competition)
         {
             await dbContext.Competitions.AddAsync(competition);
-            return await dbContext.SaveChangesAsync();
         }
 
-        public async Task<int> DeleteCompetition(Competition competition)
+        public async Task<int> DeleteCompetitionAsync(Competition competition)
         {
             dbContext.Competitions.Remove(competition);
             return await dbContext.SaveChangesAsync();
         }
 
-        public async Task<bool> SaveChangesCompetitionAsync()
+        public async Task<bool> SaveChanges()
         {
             return await dbContext.SaveChangesAsync() >= 0;
         }
 
-        public async Task<List<Competition>> GetCompetition()
+        public async Task<List<Competition>> GetCompetitionAsync()
         {
             var competition = await dbContext.Competitions.ToListAsync();
             return competition;
         }
 
-        public async Task<Competition> GetCompetitionById(Guid competitionId)
+        public async Task<Competition> GetCompetitionByIdAsync(Guid competitionId)
         {
             var competition = await dbContext.Competitions.FirstOrDefaultAsync(t => t.Id == competitionId);
             return competition;
         }
 
-        public async Task<List<Competition>> GetCompetitionByName(string name)
+        public async Task<List<Competition>> GetCompetitionByNameAsync(string name)
         {
             var competition = await dbContext.Competitions.Where(t => t.Name == name).ToListAsync();
             return competition;

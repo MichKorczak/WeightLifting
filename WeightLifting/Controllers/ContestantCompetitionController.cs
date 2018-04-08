@@ -9,22 +9,25 @@ using Services.Services.Interfaces;
 namespace WeightLifting.Controllers
 {
     [Produces("application/json")]
-    [Route("api/ContestandCompetition")]
-    public class ContestandCompetitionController : Controller
+    [Route("api/ContestantCompetitions")]
+    public class ContestantCompetitionsController : Controller // literówka w nazwie była
     {
-        private readonly IMapper mapper;
         private readonly IContestantCompetitionServis contestantCompetitionServis;
+        private readonly IMapper mapper;
 
-        public ContestandCompetitionController(IMapper mapper, IContestantCompetitionServis contestandCompetition)
+        public ContestantCompetitionsController(IMapper mapper, IContestantCompetitionServis contestandCompetition)
         {
             this.mapper = mapper;
-            this.contestantCompetitionServis = contestandCompetition; 
+            contestantCompetitionServis = contestandCompetition;
         }
 
+        // do poprawy wg Contestant Controller
+
+
         [HttpGet]
-        public async Task<IActionResult> GetContestandCompetition()
+        public async Task<IActionResult> Get() 
         {
-            var contestandCompetition = await contestantCompetitionServis.GetContestantCompetition();
+            var contestandCompetition = mapper.Map<ContestantCompetitionForDisplay>(await contestantCompetitionServis.GetContestantCompetitionAsync());
             return Ok(contestandCompetition);
         }
 
@@ -33,45 +36,44 @@ namespace WeightLifting.Controllers
         {
             if (!ModelState.IsValid || contestandCompetition == null)
                 return BadRequest();
-
             var contestandCompetitionToAdd = mapper.Map<ContestantCompetition>(contestandCompetition);
-            var value = await contestantCompetitionServis.AddConstestandCompetition(contestandCompetitionToAdd);
-            if (value <= 0)
-            {
+
+            await contestantCompetitionServis.AddConstestandCompetitionAsync(contestandCompetitionToAdd);
+            if (!await contestantCompetitionServis.SaveChanges())
                 return StatusCode(500, "Fault while saving...");
-            }
-            var contestandCompetitionForDisplay = mapper.Map<ContestantCompetitionForDisplay>(contestandCompetitionToAdd);
+
+            var contestandCompetitionForDisplay =
+                mapper.Map<ContestantCompetitionForDisplay>(contestandCompetitionToAdd);
             return Ok(contestandCompetitionForDisplay);
         }
 
         [HttpDelete("{id}")]
-        public async Task<IActionResult> DeleteContestantCompetition(Guid id)
+        public async Task<IActionResult> Delete(Guid id)
         {
-            var contestantCompetition = contestantCompetitionServis.GetContestantCompetitionById(id).Result;
+            var contestantCompetition = contestantCompetitionServis.GetContestantCompetitionByIdAsync(id).Result;
             if (contestantCompetition == null)
                 return BadRequest();
-            var value = await contestantCompetitionServis.DeleteContestantCompetition(contestantCompetition);
-            if (value <= 0)
-            {
+            await contestantCompetitionServis.DeleteContestantCompetitionAsync(contestantCompetition);
+            if (!await contestantCompetitionServis.SaveChanges())
                 return StatusCode(500, "Fault while saving...");
-            }
             return NoContent();
         }
 
         [HttpPut("{id}")]
-        public async Task<IActionResult> UpdateContestantCompetition(Guid id, [FromBody] ContestantCompetitionForUpdate contestantCompetition)
+        public async Task<IActionResult> UpdateContestantCompetition(Guid id,
+            [FromBody] ContestantCompetitionForUpdate contestantCompetition)
         {
             if (!ModelState.IsValid)
                 return BadRequest();
-            var originContestantCompetition = contestantCompetitionServis.GetContestantCompetitionById(id).Result;
+            var originContestantCompetition = contestantCompetitionServis.GetContestantCompetitionByIdAsync(id);
             if (originContestantCompetition == null)
                 return BadRequest();
+
             Mapper.Map(originContestantCompetition, contestantCompetition);
-            if (!await contestantCompetitionServis.SaveChangesContestanCompetitionAsync())
-            {
+            if (!await contestantCompetitionServis.SaveChanges())
                 return StatusCode(500, "Fault while saving...");
-            }
-            var contestantCompetitionForDisplay = mapper.Map<ContestantCompetitionForDisplay>(originContestantCompetition);
+            var contestantCompetitionForDisplay =
+                mapper.Map<ContestantCompetitionForDisplay>(originContestantCompetition);
 
             return Ok(contestantCompetitionForDisplay);
         }
