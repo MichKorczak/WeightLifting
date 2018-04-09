@@ -3,10 +3,10 @@ using System.ComponentModel.DataAnnotations;
 
 namespace Data.DataTransferObject
 {
-    public class Register
+    public class UserForRegister
     {
         [Required]
-        public string EmailAddress { get; set; }
+        public string Email { get; set; }
 
         [Required]
         public string Password { get; set; }
@@ -17,6 +17,6 @@ namespace Data.DataTransferObject
         [Required]
         public string LastName { get; set; }
 
-        public DateTime DateOfBirthday { get; set; }
+        public int DateOfBirthday { get; set; }
     }
 }

@@ -22,7 +22,7 @@ namespace Services.Services.Implementations
 
         public async Task<bool> AddUserAsync(User user)
         {
-            var loginTest = await dbContext.Users.FirstOrDefaultAsync(t => t.EmailAddress == user.EmailAddress);
+            var loginTest = await dbContext.Users.FirstOrDefaultAsync(t => t.Email == user.Email);
             if (loginTest != null)
                 return false;
             await dbContext.Users.AddAsync(user);
@@ -30,9 +30,9 @@ namespace Services.Services.Implementations
 
         }
 
-        public async Task<User> LoginAsync(Login login)
+        public async Task<User> LoginAsync(UserForLogin login)
         {
-            var loginTask =await dbContext.Users.FirstOrDefaultAsync(t => t.EmailAddress == login.EmailAddress);
+            var loginTask =await dbContext.Users.FirstOrDefaultAsync(t => t.Email == login.EmailAddress);
             if (loginTask == null)
                 return null;
             if (login.Password == loginTask.Password)

@@ -2,7 +2,7 @@
 
 namespace Data.DataTransferObject
 {
-    public class Login
+    public class UserForLogin
     {
         [Required]
         public string EmailAddress { get; set; }

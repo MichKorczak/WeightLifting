@@ -1,12 +1,8 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
+﻿using System.Threading.Tasks;
 using AutoMapper;
 using Data.DataTransferObject;
 using Data.Models;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.AspNetCore.Mvc.ModelBinding;
 using Services.Services.Interfaces;
 
 namespace WeightLifting.Controllers 
@@ -25,7 +21,7 @@ namespace WeightLifting.Controllers
         }
 
         [HttpPost]
-        public async Task<IActionResult> Register([FromBody] Register register)
+        public async Task<IActionResult> Register([FromBody] UserForRegister register)
         {
             if (!ModelState.IsValid || register == null)
                 return BadRequest();
@@ -44,8 +40,8 @@ namespace WeightLifting.Controllers
             return BadRequest();
         }
 
-        [HttpGet]
-        public async Task<IActionResult> Login([FromBody] Login login)
+        [HttpPost]
+        public async Task<IActionResult> Login([FromBody] UserForLogin login)
         {
             if (!ModelState.IsValid)
                 return BadRequest();
@@ -54,6 +50,13 @@ namespace WeightLifting.Controllers
                 return BadRequest();
             var loginForDisplay = mapper.Map<UserForDisplay>(loginAnswear);
             return Ok(loginForDisplay);
+        }
+
+        [HttpGet]
+        public string Test()
+        {
+            string cos = "dziala";
+            return cos;
         }
     }
 }

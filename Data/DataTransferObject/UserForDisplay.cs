@@ -10,6 +10,6 @@ namespace Data.DataTransferObject
 
         public string LastName { get; set; }
 
-        public DateTime DateOfBirthday { get; set; }
+        public int DateOfBirthday { get; set; }
     }
 }

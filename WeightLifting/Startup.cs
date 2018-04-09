@@ -30,6 +30,7 @@ namespace WeightLifting
             services.AddTransient<IAttemptServis, AttemptServis>();
             services.AddTransient<ICompetitionServis, CompetitionServis>();
             services.AddTransient<IContestantCompetitionServis, ContestantCompetitionServis>();
+            services.AddTransient<IUserServis, UserServis>();
             services.AddMvc();
         }
 
