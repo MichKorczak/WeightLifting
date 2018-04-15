@@ -1,8 +1,10 @@
-﻿using System.Threading.Tasks;
+﻿using System.Security.Cryptography;
+using System.Threading.Tasks;
 using AutoMapper;
 using Data.DataTransferObject;
 using Data.Models;
 using Microsoft.AspNetCore.Mvc;
+using Services.Services.Implementations;
 using Services.Services.Interfaces;
 
 namespace WeightLifting.Controllers 
@@ -25,6 +27,17 @@ namespace WeightLifting.Controllers
         {
             if (!ModelState.IsValid || register == null)
                 return BadRequest();
+
+            byte[] salt = new byte[128/8];
+            using (var rng = RandomNumberGenerator.Create())
+            {
+                rng.GetBytes(salt);
+            }
+
+            var hashPassword = HashServis.PasswordHash(register.Password, salt);
+
+            register.Salt = salt;
+            register.Password = hashPassword;
 
             var userToAdd = mapper.Map<User>(register);
 
@@ -50,13 +63,6 @@ namespace WeightLifting.Controllers
                 return BadRequest();
             var loginForDisplay = mapper.Map<UserForDisplay>(loginAnswear);
             return Ok(loginForDisplay);
-        }
-
-        [HttpGet]
-        public string Test()
-        {
-            string cos = "dziala";
-            return cos;
         }
     }
 }

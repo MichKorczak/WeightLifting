@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System.Threading.Tasks;
 using Data.DataAccessLayer;
 using Data.DataTransferObject;
 using Data.Models;
@@ -35,7 +31,8 @@ namespace Services.Services.Implementations
             var loginTask =await dbContext.Users.FirstOrDefaultAsync(t => t.Email == login.EmailAddress);
             if (loginTask == null)
                 return null;
-            if (login.Password == loginTask.Password)
+            login.Password = HashServis.PasswordHash(login.Password, loginTask.Salt);
+            if (login.Password.Equals(loginTask.Password))
                 return loginTask;
             return null;
         }
