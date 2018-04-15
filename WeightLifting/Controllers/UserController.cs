@@ -36,10 +36,10 @@ namespace WeightLifting.Controllers
 
             var hashPassword = HashServis.PasswordHash(register.Password, salt);
 
-            register.Salt = salt;
-            register.Password = hashPassword;
-
             var userToAdd = mapper.Map<User>(register);
+
+            userToAdd.Password = hashPassword;
+            userToAdd.Salt = salt;
 
             if (await userServis.AddUserAsync(userToAdd))
             {

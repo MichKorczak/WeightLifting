@@ -17,9 +17,6 @@ namespace Data.DataTransferObject
         [Required]
         public string LastName { get; set; }
 
-        [Required]
-        public byte[] Salt { get; set; }
-
         public int DateOfBirthday { get; set; }
     }
 }
