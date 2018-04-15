@@ -20,7 +20,7 @@ namespace WeightLifting.Controllers
             this.userServis = userServis;
         }
 
-        [HttpPost]
+        [HttpPost("register")]
         public async Task<IActionResult> Register([FromBody] UserForRegister register)
         {
             if (!ModelState.IsValid || register == null)
@@ -40,7 +40,7 @@ namespace WeightLifting.Controllers
             return BadRequest();
         }
 
-        [HttpPost]
+        [HttpPost("login")]
         public async Task<IActionResult> Login([FromBody] UserForLogin login)
         {
             if (!ModelState.IsValid)
