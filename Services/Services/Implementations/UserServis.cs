@@ -10,10 +10,12 @@ namespace Services.Services.Implementations
     public class UserServis : IUserServis
     {
         private readonly ApplicationDbContext dbContext;
+        private readonly IHashServis hashServis;
 
-        public UserServis(ApplicationDbContext dbContext)
+        public UserServis(ApplicationDbContext dbContext, IHashServis hashServis)
         {
             this.dbContext = dbContext;
+            this.hashServis = hashServis;
         }
 
         public async Task<bool> AddUserAsync(User user)
@@ -21,6 +23,10 @@ namespace Services.Services.Implementations
             var loginTest = await dbContext.Users.FirstOrDefaultAsync(t => t.Email == user.Email);
             if (loginTest != null)
                 return false;
+
+            user.Salt = hashServis.SaltCreated();
+            user.Password = hashServis.PasswordHash(user.Password, user.Salt);
+
             await dbContext.Users.AddAsync(user);
             return true;
 

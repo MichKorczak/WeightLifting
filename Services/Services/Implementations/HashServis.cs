@@ -22,5 +22,15 @@ namespace Services.Services.Implementations
             return hashed;
         }
 
+        public static byte[] SaltCreated()
+        {
+            byte[] salt = new byte[32];
+            using (var rng = RandomNumberGenerator.Create())
+            {
+                rng.GetBytes(salt);
+            }
+            return salt;
+        }
+
     }
 }

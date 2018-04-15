@@ -28,18 +28,7 @@ namespace WeightLifting.Controllers
             if (!ModelState.IsValid || register == null)
                 return BadRequest();
 
-            byte[] salt = new byte[128/8];
-            using (var rng = RandomNumberGenerator.Create())
-            {
-                rng.GetBytes(salt);
-            }
-
-            var hashPassword = HashServis.PasswordHash(register.Password, salt);
-
             var userToAdd = mapper.Map<User>(register);
-
-            userToAdd.Password = hashPassword;
-            userToAdd.Salt = salt;
 
             if (await userServis.AddUserAsync(userToAdd))
             {

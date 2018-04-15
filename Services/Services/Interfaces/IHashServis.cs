@@ -7,5 +7,7 @@ namespace Services.Services.Interfaces
     public interface IHashServis
     {
         string PasswordHash(string password, byte[] salt);
+
+        byte[] SaltCreated();
     }
 }
