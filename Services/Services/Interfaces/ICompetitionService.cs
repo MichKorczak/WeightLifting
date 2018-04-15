@@ -5,7 +5,7 @@ using Data.Models;
 
 namespace Services.Services.Interfaces
 {
-    public interface ICompetitionServis
+    public interface ICompetitionService
     {
         Task<List<Competition>> GetCompetitionAsync();
 

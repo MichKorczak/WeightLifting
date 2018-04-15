@@ -9,11 +9,11 @@ using Services.Services.Interfaces;
 
 namespace Services.Services.Implementations
 {
-    public class CompetitionServis : ICompetitionServis
+    public class CompetitionService : ICompetitionService
     {
         private readonly ApplicationDbContext dbContext;
 
-        public CompetitionServis(ApplicationDbContext dbContext)
+        public CompetitionService(ApplicationDbContext dbContext)
         {
             this.dbContext = dbContext;
         }

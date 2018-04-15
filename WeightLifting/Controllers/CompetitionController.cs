@@ -14,9 +14,9 @@ namespace WeightLifting.Controllers
     public class CompetitionController : Controller
     {
         private readonly IMapper mapper;
-        private readonly ICompetitionServis competitionServis;
+        private readonly ICompetitionService competitionServis;
 
-        public CompetitionController(IMapper mapper, ICompetitionServis competitionServis)
+        public CompetitionController(IMapper mapper, ICompetitionService competitionServis)
         {
             this.mapper = mapper;
             this.competitionServis = competitionServis;

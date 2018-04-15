@@ -1,10 +1,8 @@
-﻿using System.Security.Cryptography;
-using System.Threading.Tasks;
+﻿using System.Threading.Tasks;
 using AutoMapper;
 using Data.DataTransferObject;
 using Data.Models;
 using Microsoft.AspNetCore.Mvc;
-using Services.Services.Implementations;
 using Services.Services.Interfaces;
 
 namespace WeightLifting.Controllers 
@@ -13,13 +11,13 @@ namespace WeightLifting.Controllers
     [Route("api/User")]
     public class UserController : Controller
     {
-        private readonly IUserServis userServis;
+        private readonly IUserService userService;
         private readonly IMapper mapper;
 
-        public UserController(IMapper mapper, IUserServis userServis)
+        public UserController(IMapper mapper, IUserService userServis)
         {
             this.mapper = mapper;
-            this.userServis = userServis;
+            this.userService = userServis;
         }
 
         [HttpPost("register")]
@@ -30,9 +28,9 @@ namespace WeightLifting.Controllers
 
             var userToAdd = mapper.Map<User>(register);
 
-            if (await userServis.AddUserAsync(userToAdd))
+            if (await userService.AddUserAsync(userToAdd))
             {
-                if (!await userServis.SaveChanges())
+                if (!await userService.SaveChanges())
                     return StatusCode(500, "Fault while saving...");
 
                 var userForDisplay = mapper.Map<UserForDisplay>(userToAdd);
@@ -47,7 +45,7 @@ namespace WeightLifting.Controllers
         {
             if (!ModelState.IsValid)
                 return BadRequest();
-            var loginAnswear = await userServis.LoginAsync(login);
+            var loginAnswear = await userService.LoginAsync(login);
             if (loginAnswear == null)
                 return BadRequest();
             var loginForDisplay = mapper.Map<UserForDisplay>(loginAnswear);

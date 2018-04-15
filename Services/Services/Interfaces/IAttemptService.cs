@@ -5,7 +5,7 @@ using Data.Models;
 
 namespace Services.Services.Interfaces
 {
-    public interface IAttemptServis
+    public interface IAttemptService
     {
         Task<List<Attempt>> GetAttemptsAsync(); 
 

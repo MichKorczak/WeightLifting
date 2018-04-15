@@ -4,7 +4,7 @@ using Data.Models;
 
 namespace Services.Services.Interfaces
 {
-    public interface IUserServis
+    public interface IUserService
     {
         Task<bool> AddUserAsync(User user);
 

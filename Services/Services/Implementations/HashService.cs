@@ -6,12 +6,13 @@ using System.Text;
 using Data.Models;
 using Microsoft.AspNetCore.Cryptography.KeyDerivation;
 using Microsoft.EntityFrameworkCore;
+using Services.Services.Interfaces;
 
 namespace Services.Services.Implementations
 {
-    public class HashServis
+    public class HashService : IHashService
     {
-        public static string PasswordHash(string password, byte[] salt)
+        public string PasswordHash(string password, byte[] salt)
         {
             string hashed = Convert.ToBase64String(KeyDerivation.Pbkdf2(
                 password: password,
@@ -22,7 +23,7 @@ namespace Services.Services.Implementations
             return hashed;
         }
 
-        public static byte[] SaltCreated()
+        public byte[] SaltCreated()
         {
             byte[] salt = new byte[32];
             using (var rng = RandomNumberGenerator.Create())

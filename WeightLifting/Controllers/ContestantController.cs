@@ -12,26 +12,26 @@ namespace WeightLifting.Controllers
     [Route("api/Contestants")]
     public class ContestantsController : Controller 
     {
-        private readonly IContestantServis contestantServis;
+        private readonly IContestantService contestantService;
         private readonly IMapper mapper;
 
-        public ContestantsController(IMapper mapper, IContestantServis contestantServis)
+        public ContestantsController(IMapper mapper, IContestantService contestantService)
         {
             this.mapper = mapper;
-            this.contestantServis = contestantServis;
+            this.contestantService = contestantService;
         }
 
         [HttpGet]
         public async Task<IActionResult> Get() 
         {   
-            var contestant = mapper.Map<ContestantForDisplay>(await contestantServis.GetContestantsAsync());          
+            var contestant = mapper.Map<ContestantForDisplay>(await contestantService.GetContestantsAsync());          
             return Ok(contestant);
         }
 
         [HttpGet("{lastName}", Name = "GetContestantByName")] 
         public async Task<IActionResult> Get(string lastName)
         {
-            var contestant = mapper.Map<ContestantCompetitionForDisplay>(await contestantServis.GetContestantsByNameAsync(lastName));
+            var contestant = mapper.Map<ContestantCompetitionForDisplay>(await contestantService.GetContestantsByNameAsync(lastName));
             return Ok(contestant);
         }
 
@@ -44,8 +44,8 @@ namespace WeightLifting.Controllers
 
             var contestantToAdd = mapper.Map<Contestant>(contestant);
 
-            await contestantServis.AddContestantAsync(contestantToAdd);
-            if (!await contestantServis.SaveChanges())
+            await contestantService.AddContestantAsync(contestantToAdd);
+            if (!await contestantService.SaveChanges())
                 return StatusCode(500, "Fault while saving...");
 
             var contestantForDisplay = mapper.Map<ContestantForDisplay>(contestantToAdd);
@@ -55,11 +55,11 @@ namespace WeightLifting.Controllers
         [HttpDelete("{id}")]
         public async Task<IActionResult> Delete(Guid id)
         {
-            var contestant = await contestantServis.GetContestantsByIdAsync(id); 
+            var contestant = await contestantService.GetContestantsByIdAsync(id); 
             if (contestant == null)
                 return BadRequest();
-            await contestantServis.DeleteContestantAsync(contestant);
-            if (!await contestantServis.SaveChanges())
+            await contestantService.DeleteContestantAsync(contestant);
+            if (!await contestantService.SaveChanges())
                 return StatusCode(500, "Fault while saving...");
             return NoContent();
         }
@@ -69,12 +69,12 @@ namespace WeightLifting.Controllers
         {
             if (!ModelState.IsValid)
                 return BadRequest();
-            var originContestant = await contestantServis.GetContestantsByIdAsync(id);
+            var originContestant = await contestantService.GetContestantsByIdAsync(id);
             if (originContestant == null)
                 return BadRequest();
 
             Mapper.Map(originContestant, contestant);
-            if (!await contestantServis.SaveChanges())
+            if (!await contestantService.SaveChanges())
                 return StatusCode(500, "Fault while saving...");
             var contestantForDisplay = mapper.Map<ContestantForDisplay>(originContestant);
 

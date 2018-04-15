@@ -13,9 +13,9 @@ namespace WeightLifting.Controllers
     public class AttemptController : Controller
     {
         private readonly IMapper mapper;
-        private readonly IAttemptServis attemptServis;
+        private readonly IAttemptService attemptServis;
 
-        public AttemptController(IMapper mapper, IAttemptServis attemptServis)
+        public AttemptController(IMapper mapper, IAttemptService attemptServis)
         {
             this.mapper = mapper;
             this.attemptServis = attemptServis;

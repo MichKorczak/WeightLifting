@@ -8,11 +8,11 @@ using Services.Services.Interfaces;
 
 namespace Services.Services.Implementations
 {
-    public class AttemptServis : IAttemptServis
+    public class AttemptService : IAttemptService
     {
         private readonly ApplicationDbContext dbContext;
 
-        public AttemptServis(ApplicationDbContext dbContext)
+        public AttemptService(ApplicationDbContext dbContext)
         {
             this.dbContext = dbContext;
         }

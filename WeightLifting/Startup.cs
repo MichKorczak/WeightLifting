@@ -26,11 +26,12 @@ namespace WeightLifting
                 options => options.UseSqlServer(Configuration.GetConnectionString("DefaultConnection")));
 
             services.AddAutoMapper();
-            services.AddTransient<IContestantServis, ContestantServis>();
-            services.AddTransient<IAttemptServis, AttemptServis>();
-            services.AddTransient<ICompetitionServis, CompetitionServis>();
-            services.AddTransient<IContestantCompetitionServis, ContestantCompetitionServis>();
-            services.AddTransient<IUserServis, UserServis>();
+            services.AddTransient<IContestantService, ContestantService>();
+            services.AddTransient<IAttemptService, AttemptService>();
+            services.AddTransient<ICompetitionService, CompetitionService>();
+            services.AddTransient<IContestantCompetitionService, ContestantCompetitionService>();
+            services.AddTransient<IUserService, UserService>();
+            services.AddTransient<IHashService, HashService>();
             services.AddMvc();
         }
 

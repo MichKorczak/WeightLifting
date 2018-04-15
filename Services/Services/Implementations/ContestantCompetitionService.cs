@@ -8,11 +8,11 @@ using Services.Services.Interfaces;
 
 namespace Services.Services.Implementations
 {
-    public class ContestantCompetitionServis : IContestantCompetitionServis
+    public class ContestantCompetitionService : IContestantCompetitionService
     {
         private readonly ApplicationDbContext dbContext;
 
-        public ContestantCompetitionServis(ApplicationDbContext dbContext)
+        public ContestantCompetitionService(ApplicationDbContext dbContext)
         {
             this.dbContext = dbContext;
         }

@@ -4,7 +4,7 @@ using System.Text;
 
 namespace Services.Services.Interfaces
 {
-    public interface IHashServis
+    public interface IHashService
     {
         string PasswordHash(string password, byte[] salt);
 

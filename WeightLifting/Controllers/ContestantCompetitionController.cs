@@ -12,10 +12,10 @@ namespace WeightLifting.Controllers
     [Route("api/ContestantCompetitions")]
     public class ContestantCompetitionsController : Controller // literówka w nazwie była
     {
-        private readonly IContestantCompetitionServis contestantCompetitionServis;
+        private readonly IContestantCompetitionService contestantCompetitionServis;
         private readonly IMapper mapper;
 
-        public ContestantCompetitionsController(IMapper mapper, IContestantCompetitionServis contestandCompetition)
+        public ContestantCompetitionsController(IMapper mapper, IContestantCompetitionService contestandCompetition)
         {
             this.mapper = mapper;
             contestantCompetitionServis = contestandCompetition;
