@@ -12,7 +12,7 @@ namespace Services.Services.Implementations
 {
     public class HashService : IHashService
     {
-        public string PasswordHash(string password, byte[] salt)
+        public string HashPassword(string password, byte[] salt)
         {
             string hashed = Convert.ToBase64String(KeyDerivation.Pbkdf2(
                 password: password,
@@ -23,7 +23,7 @@ namespace Services.Services.Implementations
             return hashed;
         }
 
-        public byte[] SaltCreated()
+        public byte[] CreatedSalt()
         {
             byte[] salt = new byte[32];
             using (var rng = RandomNumberGenerator.Create())

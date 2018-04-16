@@ -24,8 +24,8 @@ namespace Services.Services.Implementations
             if (loginTest != null)
                 return false;
 
-            user.Salt = hashService.SaltCreated();
-            user.Password = hashService.PasswordHash(user.Password, user.Salt);
+            user.Salt = hashService.CreatedSalt();
+            user.Password = hashService.HashPassword(user.Password, user.Salt);
 
             await dbContext.Users.AddAsync(user);
             return true;
@@ -37,7 +37,7 @@ namespace Services.Services.Implementations
             var loginTask =await dbContext.Users.FirstOrDefaultAsync(t => t.Email == login.EmailAddress);
             if (loginTask == null)
                 return null;
-            login.Password = hashService.PasswordHash(login.Password, loginTask.Salt);
+            login.Password = hashService.HashPassword(login.Password, loginTask.Salt);
             if (login.Password.Equals(loginTask.Password))
                 return loginTask;
             return null;

@@ -6,8 +6,8 @@ namespace Services.Services.Interfaces
 {
     public interface IHashService
     {
-        string PasswordHash(string password, byte[] salt);
+        string HashPassword(string password, byte[] salt);
 
-        byte[] SaltCreated();
+        byte[] CreatedSalt();
     }
 }

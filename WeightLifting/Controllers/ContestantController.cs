@@ -28,7 +28,7 @@ namespace WeightLifting.Controllers
             return Ok(contestant);
         }
 
-        [HttpGet("{lastName}", Name = "GetContestantByName")] 
+        [HttpGet("lastName", Name = "GetContestantByName")] 
         public async Task<IActionResult> Get(string lastName)
         {
             var contestant = mapper.Map<ContestantCompetitionForDisplay>(await contestantService.GetContestantsByNameAsync(lastName));
