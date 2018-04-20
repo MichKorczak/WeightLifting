@@ -1,10 +1,14 @@
-﻿using AutoMapper;
+﻿using System.Text;
+using AutoMapper;
 using Data.DataAccessLayer;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using Microsoft.IdentityModel.Tokens;
 using Services.Services.Implementations;
 using Services.Services.Interfaces;
 
@@ -32,6 +36,19 @@ namespace WeightLifting
             services.AddTransient<IContestantCompetitionService, ContestantCompetitionService>();
             services.AddTransient<IUserService, UserService>();
             services.AddTransient<IHashService, HashService>();
+            services.AddTransient<ITokenService, TokenService>();
+            services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme).AddJwtBearer(opt =>
+            {
+                opt.TokenValidationParameters = new TokenValidationParameters
+                {
+                    ValidateIssuer = true,
+                    ValidateAudience = true,
+                    ValidateIssuerSigningKey = true,
+                    ValidIssuer = "mysite.com",
+                    ValidAudience = "mysite.com",
+                    IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes("ajshkfsdhfasdfbasbmbzxv"))
+                };
+            });
             services.AddMvc();
         }
 

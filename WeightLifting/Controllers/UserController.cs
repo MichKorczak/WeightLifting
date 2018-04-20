@@ -12,11 +12,13 @@ namespace WeightLifting.Controllers
     public class UserController : Controller
     {
         private readonly IUserService userService;
+        private readonly ITokenService tokenService;
         private readonly IMapper mapper;
 
-        public UserController(IMapper mapper, IUserService userServis)
+        public UserController(IMapper mapper, IUserService userServis, ITokenService tokenService)
         {
             this.mapper = mapper;
+            this.tokenService = tokenService;
             this.userService = userServis;
         }
 
@@ -48,8 +50,8 @@ namespace WeightLifting.Controllers
             var loginAnswear = await userService.LoginAsync(login);
             if (loginAnswear == null)
                 return BadRequest();
-            var loginForDisplay = mapper.Map<UserForDisplay>(loginAnswear);
-            return Ok(loginForDisplay);
+            var loginToken = tokenService.CreateToken(login);
+            return Ok(loginToken);
         }
     }
 }

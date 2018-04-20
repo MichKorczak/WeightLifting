@@ -34,7 +34,7 @@ namespace Services.Services.Implementations
 
         public async Task<User> LoginAsync(UserForLogin login)
         {
-            var loginTask =await dbContext.Users.FirstOrDefaultAsync(t => t.Email == login.EmailAddress);
+            var loginTask =await dbContext.Users.FirstOrDefaultAsync(t => t.Email == login.Email);
             if (loginTask == null)
                 return null;
             login.Password = hashService.HashPassword(login.Password, loginTask.Salt);
