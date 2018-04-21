@@ -8,7 +8,7 @@ namespace Services.Services.Interfaces
     {
         Task<bool> AddUserAsync(User user);
 
-        Task<User> LoginAsync(UserForLogin login);
+        Task<TokenModel> GetToken(UserForLogin login);
 
         Task<bool> SaveChanges();
     }

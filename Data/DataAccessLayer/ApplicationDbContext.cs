@@ -15,5 +15,6 @@ namespace Data.DataAccessLayer
         public DbSet<ContestantCompetition> ContestantCompetitions { get; set; }
         public DbSet<Contestant> Contestants { get; set; }
         public DbSet<User> Users { get; set; }
+        public DbSet<TokenModel> TokenModels { get; set; }
     }
 }

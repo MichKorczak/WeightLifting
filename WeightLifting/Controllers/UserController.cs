@@ -47,11 +47,10 @@ namespace WeightLifting.Controllers
         {
             if (!ModelState.IsValid)
                 return BadRequest();
-            var loginAnswear = await userService.LoginAsync(login);
+            var loginAnswear = await userService.GetToken(login);
             if (loginAnswear == null)
                 return BadRequest();
-            var loginToken = tokenService.CreateToken(login);
-            return Ok(loginToken);
+            return Ok(loginAnswear);
         }
     }
 }

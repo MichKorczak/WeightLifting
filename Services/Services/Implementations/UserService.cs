@@ -11,9 +11,11 @@ namespace Services.Services.Implementations
     {
         private readonly ApplicationDbContext dbContext;
         private readonly IHashService hashService;
+        private readonly ITokenService tokenService;
 
-        public UserService(ApplicationDbContext dbContext, IHashService hashService)
+        public UserService(ApplicationDbContext dbContext, IHashService hashService, ITokenService tokenService)
         {
+            this.tokenService = tokenService;
             this.hashService = hashService;
             this.dbContext = dbContext;
         }
@@ -32,14 +34,14 @@ namespace Services.Services.Implementations
 
         }
 
-        public async Task<User> LoginAsync(UserForLogin login)
+        public async Task<TokenModel> GetToken(UserForLogin login)
         {
             var loginTask =await dbContext.Users.FirstOrDefaultAsync(t => t.Email == login.Email);
             if (loginTask == null)
                 return null;
             login.Password = hashService.HashPassword(login.Password, loginTask.Salt);
             if (login.Password.Equals(loginTask.Password))
-                return loginTask;
+                return tokenService.CreateToken(loginTask);
             return null;
         }
 
