@@ -40,7 +40,7 @@ namespace WeightLifting.Controllers
             if (!await attemptServis.SaveChanges())
                 return StatusCode(500, "Fault while saving...");
 
-            var attemptForDisplay = mapper.Map<ContestantForDisplay>(attemptToAdd);
+            var attemptForDisplay = mapper.Map<AttemptForDisplay>(attemptToAdd);
             return Ok(attemptForDisplay);
         }
 

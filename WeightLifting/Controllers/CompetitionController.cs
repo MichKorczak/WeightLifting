@@ -25,7 +25,7 @@ namespace WeightLifting.Controllers
         [HttpGet]
         public async Task<IActionResult> Get()
         {
-            var attempt = mapper.Map<AttemptForDisplay>(await competitionServis.GetCompetitionAsync());
+            var attempt = mapper.Map<CompetitionForDisplay>(await competitionServis.GetCompetitionAsync());
             return Ok(attempt);
         }
 

@@ -32,7 +32,7 @@ namespace WeightLifting
 
             CreateMap<ContestantCompetition, ContestantCompetitionForDisplay>();
             CreateMap<ContestantCompetitionForCreation, ContestantCompetition>();
-            CreateMap<ContestantForUpdate, Contestant>();
+            CreateMap<ContestantCompetitionForUpdate, ContestantCompetition>();
 
             CreateMap<UserForRegister, User>();
             CreateMap<User, UserForLogin>();
