@@ -16,7 +16,7 @@ namespace WeightLifting
                     src => DateTime.Parse(src.DateOfBirthday)));
             CreateMap<ContestantForUpdate, Contestant>()
                 .ForMember(dest => dest.DateOfBirthday, opt => opt.MapFrom(
-                    src => DateTime.Parse(src.DateOfBirtch)));
+                    src => DateTime.Parse(src.DateOfBirthday)));
 
             CreateMap<Attempt, AttemptForDisplay>();
             CreateMap<AttemptForCreation, Attempt>();

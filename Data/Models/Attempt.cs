@@ -19,6 +19,6 @@ namespace Data.Models
         [ForeignKey("Competition")]
         public Guid CompetitionId { get; set; }
 
-        public Competition Competition { get; set; }
+        public virtual Competition Competition { get; set; }
     }
 }

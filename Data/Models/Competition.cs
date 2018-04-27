@@ -11,7 +11,7 @@ namespace Data.Models
 
         public DateTime Date { get; set; }
         public string Name { get; set; }
-        public ICollection<ContestantCompetition> ContestantCompetition { get; set; }
-        public ICollection<Attempt> Attempt { get; set; }
+        public virtual ICollection<ContestantCompetition> ContestantCompetition { get; set; }
+        public virtual ICollection<Attempt> Attempt { get; set; }
     }
 }

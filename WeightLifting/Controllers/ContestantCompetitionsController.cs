@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Threading.Tasks;
 using AutoMapper;
 using Data.DataTransferObject;
@@ -10,24 +11,26 @@ namespace WeightLifting.Controllers
 {
     [Produces("application/json")]
     [Route("api/ContestantCompetitions")]
-    public class ContestantCompetitionsController : Controller // literówka w nazwie była
+    public class ContestantCompetitionsController : Controller 
     {
         private readonly IContestantCompetitionService contestantCompetitionServis;
+        private readonly ICompetitionService competitionService;
+        private readonly IContestantService contestantService;
         private readonly IMapper mapper;
 
-        public ContestantCompetitionsController(IMapper mapper, IContestantCompetitionService contestandCompetition)
+        public ContestantCompetitionsController(IMapper mapper, IContestantCompetitionService contestandCompetition, 
+            ICompetitionService competitionService, IContestantService contestantService)
         {
             this.mapper = mapper;
-            contestantCompetitionServis = contestandCompetition;
+            this.competitionService = competitionService;
+            this.contestantService = contestantService;
+            this.contestantCompetitionServis = contestandCompetition;
         }
-
-        // do poprawy wg Contestant Controller
-
 
         [HttpGet]
         public async Task<IActionResult> Get() 
         {
-            var contestandCompetition = mapper.Map<ContestantCompetitionForDisplay>(await contestantCompetitionServis.GetContestantCompetitionAsync());
+            var contestandCompetition = mapper.Map<List<ContestantCompetitionForDisplay>>(await contestantCompetitionServis.GetContestantCompetitionAsync());
             return Ok(contestandCompetition);
         }
 
@@ -36,6 +39,11 @@ namespace WeightLifting.Controllers
         {
             if (!ModelState.IsValid || contestandCompetition == null)
                 return BadRequest();
+            contestandCompetition.Competition = 
+                competitionService.GetCompetitionByIdAsync(contestandCompetition.CompetitionId).Result;
+            contestandCompetition.Contestant =
+                contestantService.GetContestantsByIdAsync(contestandCompetition.ContestantId).Result;
+
             var contestandCompetitionToAdd = mapper.Map<ContestantCompetition>(contestandCompetition);
 
             await contestantCompetitionServis.AddConstestandCompetitionAsync(contestandCompetitionToAdd);

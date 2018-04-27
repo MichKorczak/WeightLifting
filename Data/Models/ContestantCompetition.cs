@@ -16,7 +16,7 @@ namespace Data.Models
         public Competition Competition { get; set; }
 
         [ForeignKey("Contestant")]
-        public Guid ContestandId { get; set; }
+        public Guid ContestantId { get; set; }
 
         [ForeignKey("Competition")]
         public Guid CompetitionId { get; set; }

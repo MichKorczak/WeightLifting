@@ -14,6 +14,6 @@ namespace Data.Models
         public string LastName { get; set; }
         public DateTime DateOfBirthday { get; set; }
         public Sex Sex { get; set; }
-        public ICollection<ContestantCompetition> ContestantCompetition { get; set; }
+        public virtual ICollection<ContestantCompetition> ContestantCompetition { get; set; }
     }
 }

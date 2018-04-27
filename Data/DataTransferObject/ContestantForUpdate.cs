@@ -7,7 +7,7 @@ namespace Data.DataTransferObject
     {
         public string Name { get; set; }
 
-        public string DateOfBirtch { get; set; }
+        public string DateOfBirthday { get; set; }
 
         public Sex Sex { get; set; }
     }

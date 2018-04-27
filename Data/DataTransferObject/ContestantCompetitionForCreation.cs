@@ -1,4 +1,5 @@
-﻿using System.ComponentModel.DataAnnotations;
+﻿using System;
+using System.ComponentModel.DataAnnotations;
 using Data.Models;
 
 namespace Data.DataTransferObject
@@ -15,9 +16,13 @@ namespace Data.DataTransferObject
         public decimal Sincler { get; set; }
 
         [Required]
+        public Guid ContestantId { get; set; }
+
         public Contestant Contestant { get; set; }
 
         [Required]
+        public Guid CompetitionId { get; set; }
+
         public Competition Competition { get; set; }
     }
 }

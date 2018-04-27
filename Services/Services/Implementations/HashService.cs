@@ -5,7 +5,6 @@ using System.Security.Cryptography;
 using System.Text;
 using Data.Models;
 using Microsoft.AspNetCore.Cryptography.KeyDerivation;
-using Microsoft.EntityFrameworkCore;
 using Services.Services.Interfaces;
 
 namespace Services.Services.Implementations

@@ -20,6 +20,7 @@ namespace Services.Services.Implementations
         public async Task AddAttemptAsync(Attempt attempt)
         {
             await dbContext.Attempts.AddAsync(attempt);
+
         }
 
         public async Task<int> DeleteAttemptAsync(Attempt attempt)

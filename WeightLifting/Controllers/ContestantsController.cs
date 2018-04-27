@@ -1,8 +1,11 @@
 ﻿using System;
+using System.Collections.Generic;
+using System.Net;
 using System.Threading.Tasks;
 using AutoMapper;
 using Data.DataTransferObject;
 using Data.Models;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Services.Services.Interfaces;
 
@@ -21,14 +24,15 @@ namespace WeightLifting.Controllers
             this.contestantService = contestantService;
         }
 
+        [Authorize]
         [HttpGet]
         public async Task<IActionResult> Get() 
         {   
-            var contestant = mapper.Map<ContestantForDisplay>(await contestantService.GetContestantsAsync());          
+            var contestant = mapper.Map<List<ContestantForDisplay>>(await contestantService.GetContestantsAsync());          
             return Ok(contestant);
         }
 
-        [HttpGet("lastName", Name = "GetContestantByName")] 
+        [HttpGet("  lastName", Name = "GetContestantByName")] 
         public async Task<IActionResult> Get(string lastName)
         {
             var contestant = mapper.Map<ContestantForDisplay>(await contestantService.GetContestantsByNameAsync(lastName));
